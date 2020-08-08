@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "68294955856",
+    "firebase_url": "https://streamhouse-d4dfb.firebaseio.com",
+    "project_id": "streamhouse-d4dfb",
+    "storage_bucket": "streamhouse-d4dfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68294955856:android:72f5a85012c62c2d0b5255",
+        "android_client_info": {
+          "package_name": "com.markapps.stream_house"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68294955856-d5fruebfs3k7auiuborredno63dic2fg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxYkhlPKQkv4joK16eA9IRGIqFSzpxyXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68294955856-d5fruebfs3k7auiuborredno63dic2fg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
