@@ -1,16 +1,52 @@
-class User {
-  String _email;
-  String _password;
+import 'package:flutter/foundation.dart';
 
-  void setEmail(String email) {
-    this._email = email;
+class User extends ChangeNotifier {
+  String email;
+  String password;
+  String firstName;
+  String lastName;
+  String cardNumber;
+  String cardExpiryDate;
+  String cardSecurityCode;
+  double subscriptionAmount;
+
+  updateEmail(userEmail) {
+    email = userEmail;
+    notifyListeners();
   }
 
-  String getEmail() => _email;
-
-  void setPassword(String password) {
-    this._password = password;
+  updatePassword(userPassword) {
+    password = userPassword;
+    notifyListeners();
   }
 
-  String getPassword() => _password;
+  updateSubscriptionAmount(userSubscriptionAmount) {
+    subscriptionAmount = userSubscriptionAmount;
+    notifyListeners();
+  }
+
+  updateFirstName(userFirstName) {
+    firstName = userFirstName;
+    notifyListeners();
+  }
+
+  updateLastName(userLastName) {
+    lastName = userLastName;
+    notifyListeners();
+  }
+
+  updateCardNumber(userCardNumber) {
+    cardNumber = userCardNumber;
+    notifyListeners();
+  }
+
+  updateCardExpiryDate(userCardExpiryDate) {
+    cardExpiryDate = userCardExpiryDate;
+    notifyListeners();
+  }
+
+  updateCardSecurityCode(userCardSecurityCode) {
+    cardSecurityCode = userCardSecurityCode;
+    notifyListeners();
+  }
 }
