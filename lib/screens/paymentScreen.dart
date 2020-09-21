@@ -56,33 +56,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Consumer<User>(builder: (context, user, _) {
               return RaisedButton(
                 child: Text('complete'),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return SimpleDialog(
-                          title: Text('User Particulars'),
-                          children: [
-                            Text('${user.email}\n'
-                                '${user.password}\n'
-                                '${user.firstName}\n'
-                                '${user.lastName}\n'
-                                '${user.cardNumber}\n'
-                                '${user.cardExpiryDate}\n'
-                                '${user.cardSecurityCode}\n'
-                                '${user.subscriptionAmount}\n')
-                          ],
-                        );
-                      });
-                  print(user.email);
-                  print(user.password);
-                  print(user.firstName);
-                  print(user.lastName);
-                  print(user.cardNumber);
-                  print(user.cardExpiryDate);
-                  print(user.cardSecurityCode);
-                  print(user.subscriptionAmount);
-                },
+                onPressed: () {},
               );
             })
           ],
@@ -91,3 +65,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
+
+//              onPressed: () async {
+//                try {
+//                  final newUser = await FirebaseAuth.instance
+//                      .createUserWithEmailAndPassword(
+//                          email: user.getEmail(), password: user.getPassword());
+//                  if (newUser != null) {
+//                    Navigator.pushNamed(context, routeName);
+//                  }
+//                } catch (error) {
+//                  print(error);
+//                }
+//              },
