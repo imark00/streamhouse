@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:provider/provider.dart';
+import 'package:stream_house/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'SignUpScreen';
@@ -31,13 +32,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onChanged: (String userEmail) {
                   email = userEmail;
                 },
+
+                //email validation
                 validator: (email) {
+                  //verifies if the entered email is empty
                   if (email.isEmpty) {
                     return 'please enter email address';
                   }
-                  final bool emailValid = RegExp(
-                          r"[a-z0-9]+([-+._][a-z0-9]+){0,2}@.*?(\.(a(?:[cdefgilmnoqrstuwxz]|ero|(?:rp|si)a)|b(?:[abdefghijmnorstvwyz]iz)|c(?:[acdfghiklmnoruvxyz]|at|o(?:m|op))|d[ejkmoz]|e(?:[ceghrstu]|du)|f[ijkmor]|g(?:[abdefghilmnpqrstuwy]|ov)|h[kmnrtu]|i(?:[delmnoqrst]|n(?:fo|t))|j(?:[emop]|obs)|k[eghimnprwyz]|l[abcikrstuvy]|m(?:[acdeghklmnopqrstuvwxyz]|il|obi|useum)|n(?:[acefgilopruz]|ame|et)|o(?:m|rg)|p(?:[aefghklmnrstwy]|ro)|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|t(?:[cdfghjklmnoprtvwz]|(?:rav)?el)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])\b){1,2}")
-                      .hasMatch(email);
+
+                  //verifies if the entered email is a valid email
+                  final bool emailValid =
+                      RegExp(regExpPatternForEmail).hasMatch(email);
                   if (emailValid == false) {
                     return 'invalid email address';
                   }
@@ -52,15 +57,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onChanged: (String userPassword) {
                   password = userPassword;
                 },
+
+                //password validation
                 validator: (password) {
+                  //verifies if the entered password is empty
                   if (password.isEmpty) {
                     return 'please enter password';
                   }
-                  final bool passwordValid = RegExp(
-                          r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$')
-                      .hasMatch(password);
+
+                  /*verifies if the entered password meet the necessary requirements i.e
+                  * must contain at least one number
+                  * must contain at least one letter
+                  * must be more than 5 characters*/
+                  final bool passwordValid =
+                      RegExp(regExpPatternForPassword).hasMatch(password);
                   if (passwordValid == false) {
-                    return '*password must contain at least one number\n*at least one letter\n*must be more than 5 characters';
+                    return '*password must contain at least one number\n'
+                        '*at least one letter\n'
+                        '*must be more than 5 characters';
                   }
                   return null;
                 },
@@ -68,8 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               RaisedButton(
                 child: Text('continue'),
                 onPressed: () {
+                  //if email and password are validated proceed to the Subscription Screen
                   if (_formKey.currentState.validate()) {
-                    print('success');
                     Provider.of<User>(context, listen: false)
                         .updateEmail(email);
                     Provider.of<User>(context, listen: false)

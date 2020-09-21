@@ -17,7 +17,11 @@ class StartApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: title,
+
+        //initial screen when the application starts
         initialRoute: HomeScreen.id,
+
+        //pathways for different screens in the application
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
