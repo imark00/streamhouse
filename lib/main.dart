@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/homeScreen.dart';
+import 'package:stream_house/screens/movieScreen.dart';
 import 'package:stream_house/screens/paymentScreen.dart';
 import 'package:stream_house/screens/signUpScreen.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
@@ -26,7 +27,8 @@ class StartApp extends StatelessWidget {
           HomeScreen.id: (context) => HomeScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
           SubscriptionPlanScreen.id: (context) => SubscriptionPlanScreen(),
-          PaymentScreen.id: (context) => PaymentScreen()
+          PaymentScreen.id: (context) => PaymentScreen(),
+          MovieScreen.id: (context) => MovieScreen()
         },
       ),
     );

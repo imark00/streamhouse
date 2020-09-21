@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
+import 'package:stream_house/screens/movieScreen.dart';
 
 class PaymentScreen extends StatefulWidget {
   static const String id = 'PaymentScreen';
@@ -56,7 +58,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Consumer<User>(builder: (context, user, _) {
               return RaisedButton(
                 child: Text('complete'),
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    final newUser = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: user.email, password: user.password);
+                    if (newUser != null) {
+                      Navigator.pushNamed(context, MovieScreen.id);
+                    }
+                  } catch (error) {
+                    print(error);
+                  }
+                },
               );
             })
           ],
@@ -65,16 +78,3 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
-
-//              onPressed: () async {
-//                try {
-//                  final newUser = await FirebaseAuth.instance
-//                      .createUserWithEmailAndPassword(
-//                          email: user.getEmail(), password: user.getPassword());
-//                  if (newUser != null) {
-//                    Navigator.pushNamed(context, routeName);
-//                  }
-//                } catch (error) {
-//                  print(error);
-//                }
-//              },
