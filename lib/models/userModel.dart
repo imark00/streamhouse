@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class User extends ChangeNotifier {
+class UserModel extends ChangeNotifier {
   String email;
   String password;
   String firstName;

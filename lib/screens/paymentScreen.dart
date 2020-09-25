@@ -23,39 +23,39 @@ class _PaymentScreenState extends State<PaymentScreen> {
             TextField(
               decoration: InputDecoration(labelText: 'First Name'),
               onChanged: (String firstName) {
-                Provider.of<User>(context, listen: false)
+                Provider.of<UserModel>(context, listen: false)
                     .updateFirstName(firstName);
               },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Last Name'),
               onChanged: (String lastName) {
-                Provider.of<User>(context, listen: false)
+                Provider.of<UserModel>(context, listen: false)
                     .updateLastName(lastName);
               },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Card Number'),
               onChanged: (String cardNumber) {
-                Provider.of<User>(context, listen: false)
+                Provider.of<UserModel>(context, listen: false)
                     .updateCardNumber(cardNumber);
               },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Expiry Date'),
               onChanged: (String cardExpiryDate) {
-                Provider.of<User>(context, listen: false)
+                Provider.of<UserModel>(context, listen: false)
                     .updateCardExpiryDate(cardExpiryDate);
               },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Security Code'),
               onChanged: (String cardSecurityCode) {
-                Provider.of<User>(context, listen: false)
+                Provider.of<UserModel>(context, listen: false)
                     .updateCardSecurityCode(cardSecurityCode);
               },
             ),
-            Consumer<User>(builder: (context, user, _) {
+            Consumer<UserModel>(builder: (context, user, _) {
               return RaisedButton(
                 child: Text('complete'),
                 onPressed: () async {
@@ -66,8 +66,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     if (newUser != null) {
                       Navigator.pushNamed(context, MovieScreen.id);
                     }
-                  } catch (error) {
-                    print(error);
+                  } on FirebaseAuthException catch (error) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('error!'),
+                            content: Text(
+                              error.message,
+                            ),
+                            actions: [
+                              FlatButton(
+                                child: Text('sure'),
+                                onPressed: () => Navigator.of(context).pop(),
+                              )
+                            ],
+                          );
+                        });
                   }
                 },
               );

@@ -36,7 +36,7 @@ class SubscriptionPlanScreen extends StatelessWidget {
                   RaisedButton(
                     child: Text('SELECT'),
                     onPressed: () {
-                      Provider.of<User>(context, listen: false)
+                      Provider.of<UserModel>(context, listen: false)
                           .updateSubscriptionAmount(plans[index].amount);
                       Navigator.pushNamed(context, PaymentScreen.id);
                     },

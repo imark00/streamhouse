@@ -1,22 +1,19 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:stream_house/screens/signInScreen.dart';
-import 'package:stream_house/screens/subscriptionPlanScreen.dart';
-import 'package:stream_house/models/userModel.dart';
-import 'package:provider/provider.dart';
 import 'package:stream_house/constants.dart';
+import 'package:stream_house/screens/movieScreen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  static const String id = 'SignUpScreen';
+class SignInScreen extends StatefulWidget {
+  static const String id = 'SignInScreen';
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  String email, password;
-
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  String email, password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,53 +65,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return 'please enter password';
                   }
 
-                  /*verifies if the entered password meet the necessary requirements i.e
-                    * must contain at least one number
-                    * must contain at least one letter
-                    * must be more than 5 characters*/
-                  final bool passwordValid =
-                      RegExp(regExpPatternForPassword).hasMatch(password);
-                  if (passwordValid == false) {
-                    return '*password must contain at least one number\n'
-                        '*at least one letter\n'
-                        '*must be more than 5 characters';
-                  }
                   return null;
                 },
               ),
               RaisedButton(
                 child: Text('continue'),
-                onPressed: () {
+                onPressed: () async {
                   //if email and password are validated proceed to the Subscription Screen
                   if (_formKey.currentState.validate()) {
-                    Provider.of<UserModel>(context, listen: false)
-                        .updateEmail(email);
-                    Provider.of<UserModel>(context, listen: false)
-                        .updatePassword(password);
-                    _formKey.currentState;
-                    Navigator.pushNamed(context, SubscriptionPlanScreen.id);
+                    try {
+                      final user = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: email, password: password);
+                      if (user != null) {
+                        Navigator.pushNamed(context, MovieScreen.id);
+                      }
+
+                      // if an error is caught during the sign in process display invalid email or password to the user
+                    } on FirebaseAuthException catch (error) {
+                      if (error.code == 'user-not-found' ||
+                          error.code == 'wrong-password') {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('error!'),
+                                content: Text(
+                                  'invalid email or password',
+                                ),
+                                actions: [
+                                  FlatButton(
+                                    child: Text('sure'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  )
+                                ],
+                              );
+                            });
+                      }
+                    }
                   }
                 },
               ),
               SizedBox(
                 height: 20.0,
               ),
-              Row(
-                children: [
-                  Text('already have an account? '),
-                  GestureDetector(
-                    child: Text(
-                      'click here to sign in',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline),
-                    ),
-                    onTap: () {
-                      print('clicked');
-                      Navigator.of(context).pushNamed(SignInScreen.id);
-                    },
-                  ),
-                ],
+              GestureDetector(
+                child: Text(
+                  'forgot password?',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onTap: () {
+                  print('password forgotten');
+                  //todo: 'create a screen for users that have forgotten their password'
+                },
               ),
             ],
           ),
