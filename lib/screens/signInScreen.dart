@@ -13,7 +13,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String email, password;
+  String _email, _password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,19 +29,19 @@ class _SignInScreenState extends State<SignInScreen> {
                   labelText: 'enter your email',
                 ),
                 onChanged: (String userEmail) {
-                  email = userEmail.trimRight();
+                  _email = userEmail.trimRight();
                 },
 
                 //email validation
-                validator: (email) {
+                validator: (_email) {
                   //verifies if the entered email is empty
-                  if (email.isEmpty) {
+                  if (_email.isEmpty) {
                     return 'please enter email address';
                   }
 
                   //verifies if the entered email is a valid email
                   final bool emailValid =
-                      RegExp(regExpPatternForEmail).hasMatch(email);
+                      RegExp(regExpPatternForEmail).hasMatch(_email);
                   if (emailValid == false) {
                     return 'invalid email address';
                   }
@@ -55,13 +55,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 obscureText: true,
                 onChanged: (String userPassword) {
-                  password = userPassword;
+                  _password = userPassword;
                 },
 
                 //password validation
-                validator: (password) {
+                validator: (_password) {
                   //verifies if the entered password is empty
-                  if (password.isEmpty) {
+                  if (_password.isEmpty) {
                     return 'please enter password';
                   }
 
@@ -76,13 +76,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     try {
                       final user = await FirebaseAuth.instance
                           .signInWithEmailAndPassword(
-                              email: email, password: password);
+                              email: _email, password: _password);
                       if (user != null) {
                         Navigator.pushNamed(context, MovieScreen.id);
                       }
-
-                      // if an error is caught during the sign in process display invalid email or password to the user
-                    } on FirebaseAuthException catch (error) {
+                    }
+                    // if an error is caught during the sign in process, display invalid email or password to the user
+                    on FirebaseAuthException catch (error) {
                       if (error.code == 'user-not-found' ||
                           error.code == 'wrong-password') {
                         showDialog(

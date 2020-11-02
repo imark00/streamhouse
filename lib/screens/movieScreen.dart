@@ -22,7 +22,7 @@ class _MovieScreenState extends State<MovieScreen> {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         loggedUser = user;
-        print(loggedUser.email);
+        // print(loggedUser.email);
       }
     } catch (e) {
       print(e);

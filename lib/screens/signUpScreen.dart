@@ -14,7 +14,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  String email, password;
+  String _email, _password;
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -32,19 +32,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   labelText: 'enter your email',
                 ),
                 onChanged: (String userEmail) {
-                  email = userEmail.trimRight();
+                  _email = userEmail.trimRight();
                 },
 
                 //email validation
-                validator: (email) {
+                validator: (_email) {
                   //verifies if the entered email is empty
-                  if (email.isEmpty) {
+                  if (_email.isEmpty) {
                     return 'please enter email address';
                   }
 
                   //verifies if the entered email is a valid email
                   final bool emailValid =
-                      RegExp(regExpPatternForEmail).hasMatch(email);
+                      RegExp(regExpPatternForEmail).hasMatch(_email);
                   if (emailValid == false) {
                     return 'invalid email address';
                   }
@@ -58,13 +58,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 obscureText: true,
                 onChanged: (String userPassword) {
-                  password = userPassword;
+                  _password = userPassword;
                 },
 
                 //password validation
-                validator: (password) {
+                validator: (_password) {
                   //verifies if the entered password is empty
-                  if (password.isEmpty) {
+                  if (_password.isEmpty) {
                     return 'please enter password';
                   }
 
@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     * must contain at least one letter
                     * must be more than 5 characters*/
                   final bool passwordValid =
-                      RegExp(regExpPatternForPassword).hasMatch(password);
+                      RegExp(regExpPatternForPassword).hasMatch(_password);
                   if (passwordValid == false) {
                     return '*password must contain at least one number\n'
                         '*at least one letter\n'
@@ -88,10 +88,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //if email and password are validated proceed to the Subscription Screen
                   if (_formKey.currentState.validate()) {
                     Provider.of<UserModel>(context, listen: false)
-                        .updateEmail(email);
+                        .updateEmail(_email);
                     Provider.of<UserModel>(context, listen: false)
-                        .updatePassword(password);
-                    _formKey.currentState;
+                        .updatePassword(_password);
                     Navigator.pushNamed(context, SubscriptionPlanScreen.id);
                   }
                 },
