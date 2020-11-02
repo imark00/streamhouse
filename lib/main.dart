@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/homeScreen.dart';
 import 'package:stream_house/screens/movieScreen.dart';
@@ -8,11 +9,13 @@ import 'package:stream_house/screens/signInScreen.dart';
 import 'package:stream_house/screens/signUpScreen.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:device_preview/device_preview.dart' as dp;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
-  runApp(StartApp());
+  runApp(dp.DevicePreview(builder: (context) => StartApp()));
 }
 
 class StartApp extends StatelessWidget {
