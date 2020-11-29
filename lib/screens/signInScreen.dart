@@ -81,6 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         Navigator.pushNamed(context, MovieScreen.id);
                       }
                     }
+                    
                     // if an error is caught during the sign in process, display invalid email or password to the user
                     on FirebaseAuthException catch (error) {
                       if (error.code == 'user-not-found' ||
