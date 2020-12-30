@@ -35,8 +35,6 @@ dependencies:
   flutter_paystack: ^1.0.4+1
   http: ^0.12.2
   url_launcher: ^5.7.5
-  device_preview: ^0.4.8
-  flutter_svg: ^0.19.1
 
 
 dev_dependencies:
