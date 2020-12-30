@@ -101,39 +101,29 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
                 ),
                 RaisedButton(
                   onPressed: () {
-                    //todo: navigate
+                    //todo: navigate to signUp screen
                   },
                   color: Colors.transparent,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(8.0),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff7c1edc),
+                          Color(0xffe75e63),
+                          Color(0xffa637ac),
+                        ],
+                      ),
                     ),
-                    child: Text("sign up"),
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
+                    child: Text(
+                      "sign up",
+                      style: TextStyle(fontSize: 30.0, color: Colors.white),
+                    ),
                   ),
                 )
-                // Container(
-                //   padding: EdgeInsets.all(0),
-                //   decoration: BoxDecoration(
-                //     color: Colors.red,
-                //     // gradient: LinearGradient(
-                //     //   colors: [
-                //     //     Color(0xff7c1edc),
-                //     //     Color(0xffe75e63),
-                //     //     Color(0xffa637ac),
-                //     //   ],
-                //     // ),
-                //   ),
-                //   child: RaisedButton(
-                //     onPressed: () {
-                //       //todo: navigate to signUp screen
-                //     },
-                //     color: Colors.transparent,
-                //     child: Text(
-                //       "sign up",
-                //       style: TextStyle(color: Colors.white),
-                //     ),
-                //   ),
-                // ),
               ],
             )
             // Align(
