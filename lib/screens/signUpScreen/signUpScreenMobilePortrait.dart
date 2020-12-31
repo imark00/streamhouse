@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
+import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 import '../../constants.dart';
-import '../signInScreen.dart';
 import '../subscriptionPlanScreen.dart';
 
 class SignUpScreenMobilePortrait extends StatefulWidget {
@@ -17,7 +17,7 @@ class SignUpScreenMobilePortrait extends StatefulWidget {
 class _SignUpScreenMobilePortraitState
     extends State<SignUpScreenMobilePortrait> {
   String _email, _password, _name;
-
+  bool _showPassword = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -32,8 +32,7 @@ class _SignUpScreenMobilePortraitState
           color: Colors.white,
           splashRadius: 20.0,
           onPressed: () {
-            // Navigator.pop(context);
-            print("tapped");
+            Navigator.pop(context);
           },
         ),
         centerTitle: true,
@@ -52,14 +51,6 @@ class _SignUpScreenMobilePortraitState
                 ),
                 height: 150.0,
               ),
-              // child: Text(
-              //   'streamhouse',
-              //   style: TextStyle(
-              //     color: Colors.white,
-              //     fontSize: 46.0,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
             ),
           ),
           Expanded(
@@ -100,11 +91,16 @@ class _SignUpScreenMobilePortraitState
                           child: Column(
                             children: [
                               TextFormField(
+                                cursorColor: Color(0xffe75e63),
+                                cursorHeight: 28.0,
                                 decoration: InputDecoration(
                                   labelText: 'name',
                                   labelStyle: TextStyle(
                                     fontSize: 23.0,
-                                    color: Colors.grey,
+                                    color: Color(0xffe75e63),
+                                  ),
+                                  errorStyle: TextStyle(
+                                    fontSize: 18.0,
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -135,12 +131,15 @@ class _SignUpScreenMobilePortraitState
                                 height: 15.0,
                               ),
                               TextFormField(
+                                cursorColor: Color(0xffa637ac),
+                                cursorHeight: 28.0,
                                 decoration: InputDecoration(
                                   labelText: 'email',
                                   labelStyle: TextStyle(
                                     fontSize: 23.0,
-                                    color: Colors.grey,
+                                    color: Color(0xffa637ac),
                                   ),
+                                  errorStyle: TextStyle(fontSize: 18.0),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0xffa637ac),
@@ -174,13 +173,31 @@ class _SignUpScreenMobilePortraitState
                                   return null;
                                 },
                               ),
-                              SizedBox(height: 15.0),
+                              SizedBox(
+                                height: 15.0,
+                              ),
                               TextFormField(
+                                cursorHeight: 28.0,
+                                cursorColor: Color(0xff7c1edc),
                                 decoration: InputDecoration(
+                                  errorStyle: TextStyle(fontSize: 18.0),
                                   labelText: 'password',
                                   labelStyle: TextStyle(
                                     fontSize: 23.0,
-                                    color: Colors.grey,
+                                    color: Color(0xff7c1edc),
+                                  ),
+                                  suffixIcon: GestureDetector(
+                                    child: Icon(
+                                      _showPassword
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: Color(0xff7c1edc),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        _showPassword = !_showPassword;
+                                      });
+                                    },
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -193,7 +210,7 @@ class _SignUpScreenMobilePortraitState
                                     ),
                                   ),
                                 ),
-                                obscureText: true,
+                                obscureText: !_showPassword,
                                 onChanged: (String userPassword) {
                                   _password = userPassword;
                                 },
@@ -228,6 +245,7 @@ class _SignUpScreenMobilePortraitState
                                 onPressed: () {
                                   //if email and password are validated proceed to the Subscription Screen
                                   if (_formKey.currentState.validate()) {
+                                    //todo: clear the provider code and write code to create new user.
                                     Provider.of<UserModel>(context,
                                             listen: false)
                                         .updateEmail(_email);
@@ -242,23 +260,36 @@ class _SignUpScreenMobilePortraitState
                               SizedBox(
                                 height: 20.0,
                               ),
-                              Row(
-                                children: [
-                                  Text('already have an account? '),
-                                  GestureDetector(
-                                    child: Text(
-                                      'click here to sign in',
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'already have an account? ',
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          decoration: TextDecoration.underline),
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 16.0,
+                                      ),
                                     ),
-                                    onTap: () {
-                                      print('clicked');
-                                      Navigator.of(context)
-                                          .pushNamed(SignInScreen.id);
-                                    },
-                                  ),
-                                ],
+                                    GestureDetector(
+                                      child: Text(
+                                        'sign in here',
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontStyle: FontStyle.italic,
+                                          color: Color(0xff7c1edc),
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                SignInScreen.id);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -275,39 +306,3 @@ class _SignUpScreenMobilePortraitState
     );
   }
 }
-
-// class RoundedRaisedButton extends StatelessWidget {
-//   final String buttonText;
-//   final Function onPressed;
-//
-//   const RoundedRaisedButton(
-//       {Key key, @required this.buttonText, @required this.onPressed})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return RaisedButton(
-//       elevation: 0.0,
-//       color: Colors.transparent,
-//       padding: EdgeInsets.all(0.0),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(10.0),
-//           gradient: LinearGradient(
-//             colors: [
-//               Color(0xffe75e63),
-//               Color(0xffa637ac),
-//               Color(0xff7c1edc),
-//             ],
-//           ),
-//         ),
-//         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
-//         child: Text(
-//           buttonText,
-//           style: TextStyle(fontSize: 30.0, color: Colors.white),
-//         ),
-//       ),
-//       onPressed: onPressed,
-//     );
-//   }
-// }

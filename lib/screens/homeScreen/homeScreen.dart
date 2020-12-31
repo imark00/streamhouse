@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MovieScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static const String id = 'MovieScreen';
 
   @override
-  _MovieScreenState createState() => _MovieScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MovieScreenState extends State<MovieScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   User loggedUser;
 
   @override

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_house/constants.dart';
-import 'package:stream_house/screens/movieScreen.dart';
+import 'package:stream_house/screens/homeScreen/homeScreen.dart';
 
 class SignInScreen extends StatefulWidget {
   static const String id = 'SignInScreen';
@@ -78,10 +78,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           .signInWithEmailAndPassword(
                               email: _email, password: _password);
                       if (user != null) {
-                        Navigator.pushNamed(context, MovieScreen.id);
+                        Navigator.pushNamed(context, HomeScreen.id);
                       }
                     }
-                    
+
                     // if an error is caught during the sign in process, display invalid email or password to the user
                     on FirebaseAuthException catch (error) {
                       if (error.code == 'user-not-found' ||

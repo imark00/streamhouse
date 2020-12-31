@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/getStartedScreen/getStartedScreen.dart';
-import 'package:stream_house/screens/homeScreen.dart';
-import 'package:stream_house/screens/movieScreen.dart';
+import 'package:stream_house/screens/homeScreen/homeScreen.dart';
 import 'package:stream_house/screens/paymentScreen.dart';
-import 'package:stream_house/screens/signInScreen.dart';
-import 'file:///C:/Users/iMarK/IdeaProjects/stream_house/lib/screens/signUpScreen/signUpScreen.dart';
+import 'package:stream_house/screens/signInScreen/signInScreen.dart';
+import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:provider/provider.dart';
 // import 'package:device_preview/device_preview.dart' as dp;
@@ -37,12 +36,11 @@ class StartApp extends StatelessWidget {
         //pathways for different screens in the application
         routes: {
           GetStartedScreen.id: (context) => GetStartedScreen(),
-          HomeScreen.id: (context) => HomeScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
           SignInScreen.id: (context) => SignInScreen(),
           SubscriptionPlanScreen.id: (context) => SubscriptionPlanScreen(),
           PaymentScreen.id: (context) => PaymentScreen(),
-          MovieScreen.id: (context) => MovieScreen()
+          HomeScreen.id: (context) => HomeScreen()
         },
       ),
     );

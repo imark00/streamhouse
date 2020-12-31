@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
-import 'package:stream_house/screens/signInScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 class GetStartedScreenMobilePortrait extends StatelessWidget {
