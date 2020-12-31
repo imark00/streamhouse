@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
+import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 import '../../constants.dart';
 import '../signInScreen.dart';
@@ -222,29 +223,8 @@ class _SignUpScreenMobilePortraitState
                               SizedBox(
                                 height: 30.0,
                               ),
-                              RaisedButton(
-                                elevation: 0.0,
-                                color: Colors.transparent,
-                                padding: EdgeInsets.all(0.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xffe75e63),
-                                        Color(0xffa637ac),
-                                        Color(0xff7c1edc),
-                                      ],
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 100.0, vertical: 8.0),
-                                  child: Text(
-                                    "done",
-                                    style: TextStyle(
-                                        fontSize: 30.0, color: Colors.white),
-                                  ),
-                                ),
+                              RoundedRaisedButton(
+                                buttonText: "done",
                                 onPressed: () {
                                   //if email and password are validated proceed to the Subscription Screen
                                   if (_formKey.currentState.validate()) {
@@ -295,3 +275,39 @@ class _SignUpScreenMobilePortraitState
     );
   }
 }
+
+// class RoundedRaisedButton extends StatelessWidget {
+//   final String buttonText;
+//   final Function onPressed;
+//
+//   const RoundedRaisedButton(
+//       {Key key, @required this.buttonText, @required this.onPressed})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return RaisedButton(
+//       elevation: 0.0,
+//       color: Colors.transparent,
+//       padding: EdgeInsets.all(0.0),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10.0),
+//           gradient: LinearGradient(
+//             colors: [
+//               Color(0xffe75e63),
+//               Color(0xffa637ac),
+//               Color(0xff7c1edc),
+//             ],
+//           ),
+//         ),
+//         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
+//         child: Text(
+//           buttonText,
+//           style: TextStyle(fontSize: 30.0, color: Colors.white),
+//         ),
+//       ),
+//       onPressed: onPressed,
+//     );
+//   }
+// }

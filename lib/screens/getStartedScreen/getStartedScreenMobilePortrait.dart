@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
 import 'package:stream_house/screens/signInScreen.dart';
+import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 class GetStartedScreenMobilePortrait extends StatelessWidget {
   @override
@@ -87,31 +88,11 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
+                child: RoundedRaisedButton(
+                  buttonText: "sign up",
                   onPressed: () {
                     Navigator.pushNamed(context, SignUpScreen.id);
                   },
-                  color: Colors.transparent,
-                  padding: EdgeInsets.all(0.0),
-                  elevation: 0.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xffe75e63),
-                          Color(0xffa637ac),
-                          Color(0xff7c1edc),
-                        ],
-                      ),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
-                    child: Text(
-                      "sign up",
-                      style: TextStyle(fontSize: 30.0, color: Colors.white),
-                    ),
-                  ),
                 ),
               ),
             ),
