@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_house/responsive/orientationLayout.dart';
 import 'package:stream_house/responsive/screenTypeLayout.dart';
+import 'package:stream_house/screens/signInScreen.dart';
+import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
 
 class GetStartedScreen extends StatelessWidget {
   static const String id = 'GetStartedScreen';
@@ -10,16 +11,24 @@ class GetStartedScreen extends StatelessWidget {
     return ScreenTypeLayout(
       mobile: OrientationLayout(
         portrait: (context) => GetStartedScreenMobilePortrait(),
-        //landscape:
-        //todo: build the landscape layout
-      ),
-      tablet: OrientationLayout(
-        //landscape:
-        //todo: build the landscape layout
-        portrait: (context) {
-          return;
+        landscape: (context) {
+          //todo: build the landscape mobile layout
+          return Container(
+            color: Colors.yellow,
+          );
         },
       ),
+      tablet: OrientationLayout(landscape: (context) {
+        //todo: build the landscape tablet layout
+        return Container(
+          color: Colors.yellow,
+        );
+      }, portrait: (context) {
+        //todo: build the portrait tablet layout
+        return Container(
+          color: Colors.yellow,
+        );
+      }),
     );
   }
 }
@@ -47,7 +56,7 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 13.0, right: 13.0, top: 10.0),
+                  const EdgeInsets.only(left: 11.0, right: 11.0, top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,7 +67,7 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
                         scale: 6.0,
                       ),
                       SizedBox(
-                        width: 25.0,
+                        width: 5.0,
                       ),
                       Text(
                         'streamhouse',
@@ -71,11 +80,9 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
                   ),
                   FlatButton(
                     padding: EdgeInsets.all(0.0),
-                    autofocus: true,
                     splashColor: Color(0xffa637ac),
                     onPressed: () {
-                      print('pressed');
-                      //todo: navigate to signIn screen
+                      Navigator.pushNamed(context, SignInScreen.id);
                     },
                     child: Text(
                       "sign in",
@@ -86,36 +93,47 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image(
+                  image: AssetImage('assets/icons/logoTransparent.png'),
+                  alignment: Alignment.center,
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 13.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 13.0),
                   child: Text(
-                    'Stream and download all your movies and tc shows with no hustle',
+                    'stream and download all your movies and tv shows with no hustle',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 28.0,
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.w800,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                RaisedButton(
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
                   onPressed: () {
-                    //todo: navigate to signUp screen
+                    Navigator.pushNamed(context, SignUpScreen.id);
                   },
                   color: Colors.transparent,
+                  padding: EdgeInsets.all(0.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xff7c1edc),
                           Color(0xffe75e63),
                           Color(0xffa637ac),
+                          Color(0xff7c1edc),
                         ],
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(vertical: 20),
                     padding:
                         EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
                     child: Text(
@@ -123,19 +141,12 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
                       style: TextStyle(fontSize: 30.0, color: Colors.white),
                     ),
                   ),
-                )
-              ],
-            )
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            // ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-// Color(0xff7c1edc),
-// Color(0xffe75e63)
-// Color(0xffa637ac),

@@ -7,7 +7,7 @@ import 'package:stream_house/screens/homeScreen.dart';
 import 'package:stream_house/screens/movieScreen.dart';
 import 'package:stream_house/screens/paymentScreen.dart';
 import 'package:stream_house/screens/signInScreen.dart';
-import 'package:stream_house/screens/signUpScreen.dart';
+import 'file:///C:/Users/iMarK/IdeaProjects/stream_house/lib/screens/signUpScreen/signUpScreen.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:provider/provider.dart';
 // import 'package:device_preview/device_preview.dart' as dp;

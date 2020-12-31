@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_house/screens/signInScreen.dart';
-import 'package:stream_house/screens/signUpScreen.dart';
+import 'file:///C:/Users/iMarK/IdeaProjects/stream_house/lib/screens/signUpScreen/signUpScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'HomeScreen';
