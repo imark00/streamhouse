@@ -29,7 +29,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 onChanged: (String firstName) {
                   print(firstName);
                   Provider.of<UserModel>(context, listen: false)
-                      .updateFirstName(firstName);
+                      .updateName(firstName);
                 },
                 validator: (firstName) {
                   if (firstName.isEmpty) {
@@ -41,8 +41,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Last Name'),
                 onChanged: (String lastName) {
-                  Provider.of<UserModel>(context, listen: false)
-                      .updateLastName(lastName);
+                  // Provider.of<UserModel>(context, listen: false)
+                  //     .updateLastName(lastName);
                 },
                 validator: (lastName) {
                   if (lastName.isEmpty) {
@@ -90,21 +90,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   return null;
                 },
               ),
-              Consumer<UserModel>(builder: (context, user, _) {
-                return RaisedButton(
-                  child: Text('complete'),
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      try {
-                        final newUser = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: user.email, password: user.password);
-                        if (newUser != null) {
-                          Navigator.pushNamed(context, HomeScreen.id);
-                        }
-                      } //handling Firebase errors
-                      on FirebaseAuthException catch (error) {
-                        showDialog(
+              Consumer<UserModel>(
+                builder: (context, user, _) {
+                  return RaisedButton(
+                    child: Text('complete'),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        try {
+                          final newUser = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: user.email, password: user.password);
+                          if (newUser != null) {
+                            Navigator.pushNamed(context, HomeScreen.id);
+                          }
+                        } //handling Firebase errors
+                        on FirebaseAuthException catch (error) {
+                          showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (context) {
@@ -121,12 +122,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   )
                                 ],
                               );
-                            });
+                            },
+                          );
+                        }
                       }
-                    }
-                  },
-                );
-              })
+                    },
+                  );
+                },
+              )
             ],
           ),
         ),

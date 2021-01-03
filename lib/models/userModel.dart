@@ -3,8 +3,7 @@ import 'package:flutter/foundation.dart';
 class UserModel extends ChangeNotifier {
   String email;
   String password;
-  String firstName;
-  String lastName;
+  String name;
   String cardNumber;
   String cardExpiryDate;
   String cardSecurityCode;
@@ -25,13 +24,8 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateFirstName(userFirstName) {
-    firstName = userFirstName;
-    notifyListeners();
-  }
-
-  updateLastName(userLastName) {
-    lastName = userLastName;
+  updateName(userName) {
+    name = userName;
     notifyListeners();
   }
 

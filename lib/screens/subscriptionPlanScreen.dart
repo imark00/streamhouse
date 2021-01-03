@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/subscriptionPlanModel.dart';
 import 'package:stream_house/models/userModel.dart';
-import 'package:stream_house/screens/paymentScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionPlanScreen extends StatefulWidget {
   static const String id = 'SubscriptionPlanScreen';
@@ -44,11 +42,6 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
                     onPressed: () {
                       Provider.of<UserModel>(context, listen: false)
                           .updateSubscriptionAmount(plans[index].amount);
-                      //Navigator.pushNamed(context, PaymentScreen.id);
-                      setState(() {
-                        _launchInWebViewWithJavaScript(
-                            'https://paystack.com/pay/g12140p4kj');
-                      });
                     },
                   ),
                   SizedBox(
@@ -59,18 +52,5 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
             );
           }),
     ));
-  }
-}
-
-Future<void> _launchInWebViewWithJavaScript(String url) async {
-  if (await canLaunch(url)) {
-    await launch(
-      url,
-      forceSafariVC: true,
-      forceWebView: true,
-      enableJavaScript: true,
-    );
-  } else {
-    throw 'Could not launch $url';
   }
 }
