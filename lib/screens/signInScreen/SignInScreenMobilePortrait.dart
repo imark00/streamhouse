@@ -1,26 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/homeScreen/homeScreen.dart';
-import 'package:stream_house/screens/signInScreen/signInScreen.dart';
-import 'package:stream_house/widgets/roundedRaisedButton.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stream_house/constants.dart';
+import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
+import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
-class SignUpScreenMobilePortrait extends StatefulWidget {
+class SignInScreenMobilePortrait extends StatefulWidget {
   @override
-  _SignUpScreenMobilePortraitState createState() =>
-      _SignUpScreenMobilePortraitState();
+  _SignInScreenMobilePortraitState createState() =>
+      _SignInScreenMobilePortraitState();
 }
 
-class _SignUpScreenMobilePortraitState
-    extends State<SignUpScreenMobilePortrait> {
-  String _email, _password, _name;
-  bool _showPassword = false;
+class _SignInScreenMobilePortraitState
+    extends State<SignInScreenMobilePortrait> {
+  String _email, _password;
   final _formKey = GlobalKey<FormState>();
   bool _showLoader = false;
+  bool _showPassword = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -86,7 +86,7 @@ class _SignUpScreenMobilePortraitState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "sign up",
+                            "sign in",
                             style: TextStyle(
                               fontSize: 35.0,
                               fontWeight: FontWeight.w600,
@@ -99,43 +99,6 @@ class _SignUpScreenMobilePortraitState
                             key: _formKey,
                             child: Column(
                               children: [
-                                TextFormField(
-                                  cursorColor: Color(0xffe75e63),
-                                  cursorHeight: 28.0,
-                                  decoration: InputDecoration(
-                                    labelText: 'name',
-                                    labelStyle: TextStyle(
-                                      fontSize: 23.0,
-                                      color: Color(0xffe75e63),
-                                    ),
-                                    errorStyle: TextStyle(
-                                      fontSize: 15.0,
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xffe75e63),
-                                      ),
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xffe75e63),
-                                      ),
-                                    ),
-                                  ),
-                                  onChanged: (String userName) {
-                                    _name = userName.trimRight();
-                                  },
-
-                                  //name validation
-
-                                  validator: (_name) {
-                                    //verifies if the entered name is empty
-                                    if (_name.isEmpty) {
-                                      return 'please enter name';
-                                    }
-                                    return null;
-                                  },
-                                ),
                                 SizedBox(
                                   height: 15.0,
                                 ),
@@ -188,6 +151,7 @@ class _SignUpScreenMobilePortraitState
                                 TextFormField(
                                   cursorHeight: 28.0,
                                   cursorColor: Color(0xff7c1edc),
+                                  obscureText: !_showPassword,
                                   decoration: InputDecoration(
                                     errorStyle: TextStyle(fontSize: 15.0),
                                     labelText: 'password',
@@ -196,17 +160,17 @@ class _SignUpScreenMobilePortraitState
                                       color: Color(0xff7c1edc),
                                     ),
                                     suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _showPassword = !_showPassword;
+                                        });
+                                      },
                                       child: Icon(
                                         _showPassword
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Color(0xff7c1edc),
                                       ),
-                                      onTap: () {
-                                        setState(() {
-                                          _showPassword = !_showPassword;
-                                        });
-                                      },
                                     ),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
@@ -219,29 +183,15 @@ class _SignUpScreenMobilePortraitState
                                       ),
                                     ),
                                   ),
-                                  obscureText: !_showPassword,
+
                                   onChanged: (String userPassword) {
                                     _password = userPassword;
                                   },
-
                                   //password validation
                                   validator: (_password) {
                                     //verifies if the entered password is empty
                                     if (_password.isEmpty) {
                                       return 'please enter password';
-                                    }
-
-                                    /*verifies if the entered password meet the necessary requirements i.e
-                                     * must contain at least one number
-                                     * must contain at least one letter
-                                     * must be more than 5 characters*/
-                                    final bool passwordValid =
-                                        RegExp(regExpPatternForPassword)
-                                            .hasMatch(_password);
-                                    if (passwordValid == false) {
-                                      return 'must contain at least one number\n'
-                                          'must contain at least one letter\n'
-                                          'must contain more than 5 characters';
                                     }
                                     return null;
                                   },
@@ -250,7 +200,7 @@ class _SignUpScreenMobilePortraitState
                                   height: 30.0,
                                 ),
                                 Consumer<UserModel>(
-                                  builder: (context, user, _) {
+                                  builder: (context, userInfo, _) {
                                     return RoundedRaisedButton(
                                       buttonText: "done",
                                       onPressed: () async {
@@ -262,49 +212,55 @@ class _SignUpScreenMobilePortraitState
                                           });
                                           Provider.of<UserModel>(context,
                                                   listen: false)
-                                              .updateName(_name);
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
                                               .updateEmail(_email);
                                           Provider.of<UserModel>(context,
                                                   listen: false)
                                               .updatePassword(_password);
                                           try {
-                                            final newUser = await _auth
-                                                .createUserWithEmailAndPassword(
-                                                    email: user.email,
-                                                    password: user.password);
-                                            if (newUser != null) {
-                                              setState(() {
-                                                _showLoader = false;
-                                              });
-                                              Navigator.pushNamed(
-                                                  context, HomeScreen.id);
+                                            final user = await _auth
+                                                .signInWithEmailAndPassword(
+                                                    email: userInfo.email,
+                                                    password:
+                                                        userInfo.password);
+                                            if (user != null) {
+                                              setState(
+                                                () {
+                                                  _showLoader = false;
+                                                  Navigator.pushNamed(
+                                                      context, HomeScreen.id);
+                                                },
+                                              );
                                             }
                                           } on FirebaseAuthException catch (error) {
                                             setState(() {
                                               _showLoader = false;
                                             });
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text('error!'),
-                                                  content: Text(
-                                                    error.message,
-                                                  ),
-                                                  actions: [
-                                                    FlatButton(
-                                                      child: Text('sure'),
-                                                      onPressed: () =>
-                                                          Navigator.of(context)
-                                                              .pop(),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            );
+                                            if (error.code ==
+                                                    'user-not-found' ||
+                                                error.code ==
+                                                    'wrong-password') {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    title: Text('error!'),
+                                                    content: Text(
+                                                      'invalid email or password',
+                                                    ),
+                                                    actions: [
+                                                      FlatButton(
+                                                        child: Text('sure'),
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }
                                           }
                                         }
                                       },
@@ -314,38 +270,39 @@ class _SignUpScreenMobilePortraitState
                                 SizedBox(
                                   height: 20.0,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'already have an account? ',
-                                        style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        child: Text(
-                                          'sign in here',
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontStyle: FontStyle.italic,
-                                            color: Color(0xff7c1edc),
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  SignInScreen.id);
-                                        },
-                                      ),
-                                    ],
+                                GestureDetector(
+                                  child: Text(
+                                    'forgot password?',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontStyle: FontStyle.italic,
+                                      color: Color(0xff7c1edc),
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    //todo: 'create a screen for users that have forgotten their password'
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                GestureDetector(
+                                  child: Text(
+                                    'create an account',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontStyle: FontStyle.italic,
+                                      color: Color(0xff7c1edc),
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.pushReplacementNamed(
+                                        context, SignUpScreen.id);
+                                  },
                                 ),
                               ],
                             ),

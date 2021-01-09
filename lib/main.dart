@@ -9,7 +9,6 @@ import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
 import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:provider/provider.dart';
-// import 'package:device_preview/device_preview.dart' as dp;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

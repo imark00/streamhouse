@@ -1,38 +1,37 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_house/responsive/orientationLayout.dart';
+import 'package:stream_house/responsive/screenTypeLayout.dart';
+import 'package:stream_house/screens/homeScreen/homeScreenMobilePortrait.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static const String id = 'MovieScreen';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  User loggedUser;
-
-  @override
-  void initState() {
-    super.initState();
-    showLoggedInUserEmail();
-  }
-
-  showLoggedInUserEmail() {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        loggedUser = user;
-        // print(loggedUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber,
+    return ScreenTypeLayout(
+      mobile: OrientationLayout(
+        portrait: (context) => HomeScreenMobilePortrait(),
+        landscape: (context) {
+          //todo: build the landscape mobile layout
+          return Container(
+            color: Colors.yellow,
+          );
+        },
+      ),
+      tablet: OrientationLayout(
+        landscape: (context) {
+          //todo: build the landscape tablet layout
+          return Container(
+            color: Colors.yellow,
+          );
+        },
+        portrait: (context) {
+          //todo: build the portrait tablet layout
+          return Container(
+            color: Colors.green,
+          );
+        },
+      ),
     );
   }
 }
