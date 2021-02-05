@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
-import 'package:stream_house/screens/homeScreen/homeScreen.dart';
+import 'package:stream_house/screens/mainScreen/mainScreen.dart';
 import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -241,7 +241,8 @@ class _SignUpScreenMobilePortraitState
                                     if (passwordValid == false) {
                                       return 'must contain at least one number\n'
                                           'must contain at least one letter\n'
-                                          'must contain more than 5 characters';
+                                          'must contain more than 5 characters\n'
+                                          'no special characters';
                                     }
                                     return null;
                                   },
@@ -279,7 +280,7 @@ class _SignUpScreenMobilePortraitState
                                                 _showLoader = false;
                                               });
                                               Navigator.pushNamed(
-                                                  context, HomeScreen.id);
+                                                  context, MainScreen.id);
                                             }
                                           } on FirebaseAuthException catch (error) {
                                             setState(() {

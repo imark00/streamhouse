@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
-import 'package:stream_house/screens/homeScreen/homeScreen.dart';
+import 'package:stream_house/screens/mainScreen/mainScreen.dart';
 import 'package:stream_house/constants.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
@@ -227,7 +227,7 @@ class _SignInScreenMobilePortraitState
                                                 () {
                                                   _showLoader = false;
                                                   Navigator.pushNamed(
-                                                      context, HomeScreen.id);
+                                                      context, MainScreen.id);
                                                 },
                                               );
                                             }

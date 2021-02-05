@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
-import 'file:///C:/Users/iMarK/IdeaProjects/stream_house/lib/screens/homeScreen/homeScreen.dart';
+import 'file:///C:/Users/iMarK/IdeaProjects/stream_house/lib/screens/mainScreen/mainScreen.dart';
 
 class PaymentScreen extends StatefulWidget {
   static const String id = 'PaymentScreen';
@@ -101,7 +101,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               .createUserWithEmailAndPassword(
                                   email: user.email, password: user.password);
                           if (newUser != null) {
-                            Navigator.pushNamed(context, HomeScreen.id);
+                            Navigator.pushNamed(context, MainScreen.id);
                           }
                         } //handling Firebase errors
                         on FirebaseAuthException catch (error) {

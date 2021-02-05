@@ -51,7 +51,7 @@ class GetStartedScreenMobilePortrait extends StatelessWidget {
                   ),
                   FlatButton(
                     padding: EdgeInsets.all(0.0),
-                    splashColor: Color(0xffa637ac),
+                    highlightColor: Color(0xffa637ac),
                     onPressed: () {
                       Navigator.pushNamed(context, SignInScreen.id);
                     },
