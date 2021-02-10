@@ -15,12 +15,17 @@ class MainScreenMobilePortrait extends StatefulWidget {
 class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
   User loggedUser;
   int _currentIndex = 0;
-  List<Widget> screenOptions = [Home(), Search(), Personal(), Account()];
   final List<BottomNavigationBarItem> _bottomBarItems = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
     BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
     BottomNavigationBarItem(icon: Icon(Icons.folder), label: "personal"),
     BottomNavigationBarItem(icon: Icon(Icons.person), label: "account"),
+  ];
+  List<Widget> screenOptions = [
+    Home(),
+    Search(),
+    PersonalScreenOption(),
+    Account()
   ];
 
   @override
@@ -51,11 +56,11 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
     return Scaffold(
       backgroundColor: Color(0xff063048),
       appBar: AppBar(
-        backgroundColor: Color(0xff063048),
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xff0d2e41),
+        title: Text("StreamHouse"),
         centerTitle: true,
-        title: Text(
-          "streamhouse",
-        ),
       ),
       body: IndexedStack(
         index: _currentIndex,
@@ -63,8 +68,8 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xff063048),
-        unselectedItemColor: Colors.white,
+        backgroundColor: Color(0xff0d2e41),
+        unselectedItemColor: Colors.white70,
         fixedColor: Color(0xffe75e63),
         currentIndex: _currentIndex,
         onTap: _onPressed,

@@ -27,23 +27,7 @@ class _SignInScreenMobilePortraitState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff063048),
-      appBar: AppBar(
-        backgroundColor: Color(0xff063048),
-        elevation: 20.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_sharp),
-          color: Colors.white,
-          splashRadius: 20.0,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        centerTitle: true,
-        title: Text(
-          "streamhouse",
-          style: TextStyle(fontSize: 25.0),
-        ),
-      ),
+      appBar: _buildAppBar(context),
       body: ModalProgressHUD(
         inAsyncCall: _showLoader,
         progressIndicator: CircularProgressIndicator(
@@ -226,10 +210,10 @@ class _SignInScreenMobilePortraitState
                                               setState(
                                                 () {
                                                   _showLoader = false;
-                                                  Navigator.pushNamed(
-                                                      context, MainScreen.id);
                                                 },
                                               );
+                                              Navigator.pushNamed(
+                                                  context, MainScreen.id);
                                             }
                                           } on FirebaseAuthException catch (error) {
                                             setState(() {
@@ -247,6 +231,28 @@ class _SignInScreenMobilePortraitState
                                                     title: Text('error!'),
                                                     content: Text(
                                                       'invalid email or password',
+                                                    ),
+                                                    actions: [
+                                                      FlatButton(
+                                                        child: Text('sure'),
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    title: Text('error!'),
+                                                    content: Text(
+                                                      error.message,
                                                     ),
                                                     actions: [
                                                       FlatButton(
@@ -314,8 +320,30 @@ class _SignInScreenMobilePortraitState
                 ),
               ),
             ),
+            // _buildSignInView(context, _formKey, _showPassword, _email,
+            //     _password, _showLoader, _auth),
           ],
         ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Color(0xff063048),
+      elevation: 20.0,
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_sharp),
+        color: Colors.white,
+        splashRadius: 20.0,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      centerTitle: true,
+      title: Text(
+        "streamhouse",
+        style: TextStyle(fontSize: 25.0),
       ),
     );
   }

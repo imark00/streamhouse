@@ -1,12 +1,71 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Personal extends StatelessWidget {
+class PersonalScreenOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Color(0xff063048),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xff0d2e41),
+          // centerTitle: true,
+          // title: Text(
+          //   "StreamHouse",
+          // ),
+          bottom: PreferredSize(
+            preferredSize: Size(0.0, 20.0),
+            child: TabBar(
+              indicatorColor: Color(0xffe75e63),
+              tabs: [
+                Tab(
+                  text: "Favorites",
+                ),
+                Tab(
+                  text: "Downloads",
+                )
+              ],
+            ),
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            FavoriteScreenOption(),
+            DownloadScreenOption(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FavoriteScreenOption extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
       child: Text(
-        "Personal",
-        style: TextStyle(fontSize: 50.0),
+        "Favorite files appear here",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
+      ),
+    );
+  }
+}
+
+class DownloadScreenOption extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "Downloaded files appear here",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
       ),
     );
   }
