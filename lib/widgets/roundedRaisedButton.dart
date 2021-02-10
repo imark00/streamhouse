@@ -18,15 +18,16 @@ class RoundedRaisedButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          gradient: LinearGradient(
-            colors: [
-              Color(0xffe75e63),
-              Color(0xffa637ac),
-              Color(0xff7c1edc),
-            ],
-          ),
+          color: Color(0xffe75e63),
+          // gradient: LinearGradient(
+          //   colors: [
+          //     Color(0xffe75e63),
+          //     Color(0xffa637ac),
+          //     Color(0xff7c1edc),
+          //   ],
+          // ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 8.0),
         child: Text(
           buttonText,
           style: TextStyle(fontSize: 30.0, color: Colors.white),

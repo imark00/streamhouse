@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_house/widgets/roundedRaisedButton.dart';
+import 'package:stream_house/widgets/tile.dart';
 
 class Account extends StatelessWidget {
   @override
@@ -51,53 +53,23 @@ class Account extends StatelessWidget {
               "Settings",
               style: TextStyle(
                 color: Colors.white70,
-                fontSize: 20.0,
+                fontSize: 18.0,
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            title: Text(
-              "Account Settings",
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
-            ),
+          SettingsTile(
+            icon: Icons.settings,
+            title: "Account Settings",
             onTap: () {},
           ),
-          ListTile(
-            leading: Icon(
-              Icons.language_rounded,
-              color: Colors.white,
-            ),
-            title: Text(
-              "Language",
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
-            ),
+          SettingsTile(
+            icon: Icons.language_rounded,
+            title: "Language",
             onTap: () {},
           ),
-          ListTile(
-            leading: Icon(
-              Icons.help_rounded,
-              color: Colors.white,
-            ),
-            title: Text(
-              "Account Settings",
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
-            ),
+          SettingsTile(
+            icon: Icons.help_rounded,
+            title: "Help",
             onTap: () {},
           ),
           SizedBox(
@@ -109,40 +81,30 @@ class Account extends StatelessWidget {
               "Terms",
               style: TextStyle(
                 color: Colors.white70,
-                fontSize: 20.0,
+                fontSize: 18.0,
               ),
+            ),
+          ),
+          TermsTile(
+            title: "Terms and Conditions",
+            onTap: () {},
+          ),
+          TermsTile(
+            title: "Privacy & Policies",
+            onTap: () {},
+          ),
+          SizedBox(
+            height: 60.0,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: RoundedRaisedButton(
+              buttonText: "log out",
+              onPressed: () {},
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class Tile extends StatelessWidget {
-  final IconData _icon;
-  final String _title;
-  final Function _onTap;
-
-  Tile(this._icon, this._title, this._onTap);
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        _icon,
-        color: Colors.white,
-      ),
-      title: Text(
-        _title,
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      trailing: Icon(
-        Icons.arrow_forward_ios_rounded,
-        color: Colors.white,
-      ),
-      onTap: _onTap,
     );
   }
 }
