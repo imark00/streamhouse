@@ -287,7 +287,6 @@ class _SignInScreenMobilePortraitState
                                     ),
                                   ),
                                   onTap: () {
-                                    FocusScope.of(context).unfocus();
                                     //todo: 'create a screen for users that have forgotten their password'
                                   },
                                 ),
@@ -305,7 +304,6 @@ class _SignInScreenMobilePortraitState
                                     ),
                                   ),
                                   onTap: () {
-                                    FocusScope.of(context).unfocus();
                                     Navigator.pushReplacementNamed(
                                         context, SignUpScreen.id);
                                   },

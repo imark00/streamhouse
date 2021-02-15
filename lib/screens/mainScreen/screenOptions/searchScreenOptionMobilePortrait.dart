@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class Search extends StatelessWidget {
+class SearchScreenOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

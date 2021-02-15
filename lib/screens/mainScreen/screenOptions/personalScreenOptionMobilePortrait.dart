@@ -18,7 +18,7 @@ class PersonalScreenOption extends StatelessWidget {
           bottom: PreferredSize(
             preferredSize: Size(0.0, 20.0),
             child: TabBar(
-              indicatorColor: Color(0xffe75e63),
+              indicatorColor: Color(0xffa637ac),
               tabs: [
                 Tab(
                   text: "Favorites",

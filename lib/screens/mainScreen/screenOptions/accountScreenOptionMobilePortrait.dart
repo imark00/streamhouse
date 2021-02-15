@@ -1,9 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_house/screens/getStartedScreen/getStartedScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
 import 'package:stream_house/widgets/tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Account extends StatelessWidget {
+class AccountScreenOption extends StatefulWidget {
+  @override
+  _AccountScreenOptionState createState() => _AccountScreenOptionState();
+}
+
+class _AccountScreenOptionState extends State<AccountScreenOption> {
+  User loggedInUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,7 +61,7 @@ class Account extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'email',
+                  loggedInUser.email,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500,
@@ -100,7 +127,11 @@ class Account extends StatelessWidget {
             alignment: Alignment.center,
             child: RoundedRaisedButton(
               buttonText: "log out",
-              onPressed: () {},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, GetStartedScreen.id, (route) => false);
+              },
             ),
           ),
         ],

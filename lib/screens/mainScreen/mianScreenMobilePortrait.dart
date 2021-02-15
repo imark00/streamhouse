@@ -13,8 +13,9 @@ class MainScreenMobilePortrait extends StatefulWidget {
 }
 
 class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
-  User loggedUser;
+  User loggedInUser;
   int _currentIndex = 0;
+
   final List<BottomNavigationBarItem> _bottomBarItems = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
     BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
@@ -23,27 +24,27 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
   ];
   List<Widget> screenOptions = [
     Home(),
-    Search(),
+    SearchScreenOption(),
     PersonalScreenOption(),
-    Account()
+    AccountScreenOption(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    showLoggedInUserEmail();
-  }
-
-  showLoggedInUserEmail() {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        loggedUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   showLoggedInUserEmail();
+  // }
+  //
+  // showLoggedInUserEmail() {
+  //   try {
+  //     final user = FirebaseAuth.instance.currentUser;
+  //     if (user != null) {
+  //       loggedInUser = user;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   _onPressed(int index) {
     setState(() {
@@ -70,7 +71,7 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color(0xff0d2e41),
         unselectedItemColor: Colors.white70,
-        fixedColor: Color(0xffe75e63),
+        fixedColor: Color(0xffa637ac),
         currentIndex: _currentIndex,
         onTap: _onPressed,
         items: _bottomBarItems,
