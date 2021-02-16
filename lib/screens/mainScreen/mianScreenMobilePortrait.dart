@@ -23,7 +23,7 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
     BottomNavigationBarItem(icon: Icon(Icons.person), label: "account"),
   ];
   List<Widget> screenOptions = [
-    Home(),
+    HomeScreenOption(),
     SearchScreenOption(),
     PersonalScreenOption(),
     AccountScreenOption(),

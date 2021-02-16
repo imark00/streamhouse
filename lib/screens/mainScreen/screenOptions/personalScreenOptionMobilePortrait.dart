@@ -11,10 +11,6 @@ class PersonalScreenOption extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xff0d2e41),
-          // centerTitle: true,
-          // title: Text(
-          //   "StreamHouse",
-          // ),
           bottom: PreferredSize(
             preferredSize: Size(0.0, 20.0),
             child: TabBar(
@@ -32,8 +28,8 @@ class PersonalScreenOption extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            FavoriteScreenOption(),
-            DownloadScreenOption(),
+            FavoriteScreen(),
+            DownloadScreen(),
           ],
         ),
       ),
@@ -41,7 +37,7 @@ class PersonalScreenOption extends StatelessWidget {
   }
 }
 
-class FavoriteScreenOption extends StatelessWidget {
+class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -56,7 +52,7 @@ class FavoriteScreenOption extends StatelessWidget {
   }
 }
 
-class DownloadScreenOption extends StatelessWidget {
+class DownloadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
