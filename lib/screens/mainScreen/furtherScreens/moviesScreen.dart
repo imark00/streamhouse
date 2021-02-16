@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:http/http.dart' as http;
 
 class MoviesScreen extends StatelessWidget {
   @override
@@ -28,15 +30,25 @@ class MoviesScreen extends StatelessWidget {
                         fontSize: 28.0,
                       ),
                     ),
-                    Text(
-                      "view more",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
+                    FlatButton(
+                      padding: EdgeInsets.all(0.0),
+                      splashColor: Colors.white12,
+                      child: Text(
+                        "view more",
+                        style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
-                    )
+                      onPressed: () {
+                        print('view more tapped');
+                      },
+                    ),
                   ],
-                )
+                ),
+                ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int i) {
+                    return Container();
+                  },
+                ),
               ],
             ),
           )
