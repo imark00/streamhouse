@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:stream_house/models/userModel.dart';
@@ -191,21 +192,22 @@ class _SignInScreenMobilePortraitState
                                         //if email and password are validated proceed to the HomeScreen
                                         if (_formKey.currentState.validate()) {
                                           _formKey.currentState.save();
+                                          SystemChannels.textInput
+                                              .invokeMethod('TextInput.hide');
                                           setState(() {
                                             _showLoader = true;
                                           });
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
-                                              .updateEmail(_email);
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
-                                              .updatePassword(_password);
+                                          // Provider.of<UserModel>(context,
+                                          //         listen: false)
+                                          //     .updateEmail(_email);
+                                          // Provider.of<UserModel>(context,
+                                          //         listen: false)
+                                          //     .updatePassword(_password);
                                           try {
                                             final user = await _auth
                                                 .signInWithEmailAndPassword(
-                                                    email: userInfo.email,
-                                                    password:
-                                                        userInfo.password);
+                                                    email: _email,
+                                                    password: _password);
                                             if (user != null) {
                                               setState(
                                                 () {
@@ -293,20 +295,23 @@ class _SignInScreenMobilePortraitState
                                 SizedBox(
                                   height: 15.0,
                                 ),
-                                GestureDetector(
-                                  child: Text(
-                                    'create an account',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontStyle: FontStyle.italic,
-                                      color: Color(0xff7c1edc),
-                                      decoration: TextDecoration.underline,
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 20.0),
+                                  child: GestureDetector(
+                                    child: Text(
+                                      'create an account',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontStyle: FontStyle.italic,
+                                        color: Color(0xff7c1edc),
+                                        decoration: TextDecoration.underline,
+                                      ),
                                     ),
+                                    onTap: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, SignUpScreen.id);
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, SignUpScreen.id);
-                                  },
                                 ),
                               ],
                             ),

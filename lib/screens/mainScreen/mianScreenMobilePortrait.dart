@@ -13,7 +13,7 @@ class MainScreenMobilePortrait extends StatefulWidget {
 }
 
 class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait> {
-  User loggedInUser;
+  // User loggedInUser;
   int _currentIndex = 0;
 
   final List<BottomNavigationBarItem> _bottomBarItems = [

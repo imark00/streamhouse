@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -261,20 +262,20 @@ class _SignUpScreenMobilePortraitState
                                           setState(() {
                                             _showLoader = true;
                                           });
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
-                                              .updateName(_name);
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
-                                              .updateEmail(_email);
-                                          Provider.of<UserModel>(context,
-                                                  listen: false)
-                                              .updatePassword(_password);
+                                          // Provider.of<UserModel>(context,
+                                          //         listen: false)
+                                          //     .updateName(_name);
+                                          // Provider.of<UserModel>(context,
+                                          //         listen: false)
+                                          //     .updateEmail(_email);
+                                          // Provider.of<UserModel>(context,
+                                          //         listen: false)
+                                          //     .updatePassword(_password);
                                           try {
                                             final newUser = await _auth
                                                 .createUserWithEmailAndPassword(
-                                                    email: user.email,
-                                                    password: user.password);
+                                                    email: _email,
+                                                    password: _password);
                                             if (newUser != null) {
                                               setState(() {
                                                 _showLoader = false;

@@ -24,7 +24,6 @@ class _AccountScreenOptionState extends State<AccountScreenOption> {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
       }
     } catch (error) {
       print(error);
