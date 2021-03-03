@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_house/screens/mainScreen/furtherScreens/homeScreen.dart';
 import 'package:stream_house/screens/mainScreen/furtherScreens/moviesScreen.dart';
 import 'package:stream_house/screens/mainScreen/furtherScreens/tvShowsScreen.dart';
 
@@ -7,7 +8,7 @@ class HomeScreenOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: Color(0xff063048),
         appBar: AppBar(
@@ -18,6 +19,9 @@ class HomeScreenOption extends StatelessWidget {
             child: TabBar(
               indicatorColor: Color(0xffa637ac),
               tabs: [
+                Tab(
+                  text: 'Home',
+                ),
                 Tab(
                   text: "Movies",
                 ),
@@ -31,6 +35,7 @@ class HomeScreenOption extends StatelessWidget {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
+            HomeScreen(),
             MoviesScreen(),
             TvShowsScreen(),
           ],
