@@ -197,5 +197,110 @@ class TVShows {
   }
 
   static List onTheAirTVShows;
-  static Future<List>
+  static Future<List> getOnTheAirTVShows() async {
+    try {
+      http.Response response = await http.get(
+          'https://$kURL/tv/on_the_air?api_key=$kApiKey&language=en-US&page=1');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return onTheAirTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  static List dramaTVShows;
+  static Future<List> getDramaTVShows() async {
+    try {
+      http.Response response = await http.get(
+          '  https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=18&include_null_first_air_dates=false');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return dramaTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  static List romanceTVShows;
+  static Future<List> getRomanceTVShows() async {
+    try {
+      http.Response response = await http.get(
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return romanceTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  static List scienceFictionTVShows;
+  static Future<List> getScienceFictionTVShows() async {
+    try {
+      http.Response response = await http.get(
+          ' https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return scienceFictionTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  static List comedyTVShows;
+  static Future<List> getComedyTVShows() async {
+    try {
+      http.Response response = await http.get(
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=35&include_null_first_air_dates=false');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return comedyTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  static List animationTVShows;
+  static Future<List> getAnimationTVShows() async {
+    try {
+      http.Response response = await http.get(
+          ' https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=16&include_null_first_air_dates=false');
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return animationTVShows = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }

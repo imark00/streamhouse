@@ -28,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 8.0),
           _topRatedMovies(),
           SizedBox(height: 8.0),
-          _topRatedTVShows()
+          _topRatedTVShows(),
+          SizedBox(height: 8.0)
         ],
       ),
     );

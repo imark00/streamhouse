@@ -34,6 +34,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
           _horrorMoviesDisplay(),
           SizedBox(height: 8.0),
           _comedyMoviesDisplay(),
+          SizedBox(height: 8.0)
         ],
       ),
     );
