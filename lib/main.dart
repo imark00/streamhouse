@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/getStartedScreen/getStartedScreen.dart';
 import 'package:stream_house/screens/mainScreen/mainScreen.dart';
+import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/screens/paymentScreen.dart';
 import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
@@ -39,7 +40,8 @@ class StartApp extends StatelessWidget {
           SignInScreen.id: (context) => SignInScreen(),
           SubscriptionPlanScreen.id: (context) => SubscriptionPlanScreen(),
           PaymentScreen.id: (context) => PaymentScreen(),
-          MainScreen.id: (context) => MainScreen()
+          MainScreen.id: (context) => MainScreen(),
+          MovieDetailsScreen.id: (context) => MovieDetailsScreen()
         },
       ),
     );

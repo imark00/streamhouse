@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 
 class TvShowsScreen extends StatefulWidget {
@@ -89,20 +90,29 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.airingTodayTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.airingTodayTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.airingTodayTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white38,
+                              ),
+                              image: DecorationImage(
+                                image: TVShows.airingTodayTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.airingTodayTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -114,7 +124,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -197,7 +207,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -211,15 +221,419 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
     );
   }
 
-  Widget _dramaTVShowsDisplay() {}
+  Widget _dramaTVShowsDisplay() {
+    return Container(
+      height: 250.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Drama',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('view more');
+                  },
+                  child: Text(
+                    'view more',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FutureBuilder(
+              future: TVShows.getDramaTVShows(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                          width: 120.0,
+                          margin: EdgeInsets.only(left: 10.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: TVShows.dramaTVShows.length == null
+                                  ? AssetImage(
+                                      'assets/icons/logoTransparent.png')
+                                  : NetworkImage(
+                                      portraitImagePath(TVShows
+                                          .dramaTVShows[index]['poster_path']),
+                                    ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Text(
+                    'Loading',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              })
+        ],
+      ),
+    );
+  }
 
-  Widget _romanceTVShowsDisplay() {}
+  Widget _romanceTVShowsDisplay() {
+    return Container(
+      height: 250.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Romance',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('view more');
+                  },
+                  child: Text(
+                    'view more',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FutureBuilder(
+              future: TVShows.getRomanceTVShows(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                          width: 120.0,
+                          margin: EdgeInsets.only(left: 10.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: TVShows.romanceTVShows.length == null
+                                  ? AssetImage(
+                                      'assets/icons/logoTransparent.png')
+                                  : NetworkImage(
+                                      portraitImagePath(
+                                          TVShows.romanceTVShows[index]
+                                              ['poster_path']),
+                                    ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Text(
+                    'Loading',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              })
+        ],
+      ),
+    );
+  }
 
-  Widget _scienceFictionTVShowsDisplay() {}
+  Widget _scienceFictionTVShowsDisplay() {
+    return Container(
+      height: 250.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Sci-Fi',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('view more');
+                  },
+                  child: Text(
+                    'view more',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FutureBuilder(
+              future: TVShows.getScienceFictionTVShows(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                          width: 120.0,
+                          margin: EdgeInsets.only(left: 10.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: TVShows.scienceFictionTVShows.length ==
+                                      null
+                                  ? AssetImage(
+                                      'assets/icons/logoTransparent.png')
+                                  : NetworkImage(
+                                      portraitImagePath(
+                                          TVShows.scienceFictionTVShows[index]
+                                              ['poster_path']),
+                                    ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Text(
+                    'Loading',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              })
+        ],
+      ),
+    );
+  }
 
-  Widget _comedyTVShowsDisplay() {}
+  Widget _comedyTVShowsDisplay() {
+    return Container(
+      height: 250.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Comedy',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('view more');
+                  },
+                  child: Text(
+                    'view more',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FutureBuilder(
+              future: TVShows.getComedyTVShows(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                          width: 120.0,
+                          margin: EdgeInsets.only(left: 10.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: TVShows.comedyTVShows.length == null
+                                  ? AssetImage(
+                                      'assets/icons/logoTransparent.png')
+                                  : NetworkImage(
+                                      portraitImagePath(TVShows
+                                          .comedyTVShows[index]['poster_path']),
+                                    ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Text(
+                    'Loading',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              })
+        ],
+      ),
+    );
+  }
 
-  Widget _animationTVShowsDisplay() {}
+  Widget _animationTVShowsDisplay() {
+    return Container(
+      height: 250.0,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Animation',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('view more');
+                  },
+                  child: Text(
+                    'view more',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FutureBuilder(
+              future: TVShows.getAnimationTVShows(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Container(
+                          width: 120.0,
+                          margin: EdgeInsets.only(left: 10.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: TVShows.animationTVShows.length == null
+                                  ? AssetImage(
+                                      'assets/icons/logoTransparent.png')
+                                  : NetworkImage(
+                                      portraitImagePath(
+                                          TVShows.animationTVShows[index]
+                                              ['poster_path']),
+                                    ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Text(
+                    'Loading',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              })
+        ],
+      ),
+    );
+  }
 
   String portraitImagePath(String path) {
     return "https://image.tmdb.org/t/p/original/$path";

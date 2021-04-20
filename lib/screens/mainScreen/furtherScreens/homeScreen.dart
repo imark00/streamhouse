@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
     TrendingMovies.getTrendingMovies();
     TrendingTVShows.getTrendingTVShows();
     Movies.getTopRatedMovies();
+    TVShows.getTopRatedTVShows();
     super.initState();
   }
 
@@ -76,26 +78,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                            portraitImagePath(TrendingMovies
-                                .trendingMovies[index]['poster_path']),
+                    return GestureDetector(
+                      onTap: () {
+                        print(TrendingMovies.trendingMovies[index]['id']);
+                        Navigator.pushNamed(context, MovieDetailsScreen.id);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white38),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                              portraitImagePath(TrendingMovies
+                                  .trendingMovies[index]['poster_path']),
+                            ),
                           ),
                         ),
+                        width: 120,
+                        margin: EdgeInsets.only(left: 10.0),
                       ),
-                      width: 120,
-                      margin: EdgeInsets.only(left: 10.0),
                     );
                   },
                 ),
               );
             }
-            return Text(
-              'Loading',
-              style: TextStyle(color: Colors.white, fontSize: 26.0),
+            return Shimmer.fromColors(
+              baseColor: Colors.red,
+              highlightColor: Colors.yellow,
+              child: Text(
+                'Loading',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             );
           },
         )
@@ -144,26 +161,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                            portraitImagePath(TrendingTVShows
-                                .trendingTVShows[index]['poster_path']),
+                    return GestureDetector(
+                      onTap: () {
+                        print(TrendingTVShows.trendingTVShows[index]['id']);
+                        Navigator.pushNamed(context, MovieDetailsScreen.id);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white38),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                              portraitImagePath(TrendingTVShows
+                                  .trendingTVShows[index]['poster_path']),
+                            ),
                           ),
                         ),
+                        width: 120,
+                        margin: EdgeInsets.only(left: 10.0),
                       ),
-                      width: 120,
-                      margin: EdgeInsets.only(left: 10.0),
                     );
                   },
                 ),
               );
             }
-            return Text(
-              'Loading',
-              style: TextStyle(color: Colors.white, fontSize: 26.0),
+            return Shimmer.fromColors(
+              baseColor: Colors.red,
+              highlightColor: Colors.yellow,
+              child: Text(
+                'Loading',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             );
           },
         )
@@ -217,20 +249,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.topRatedMovies.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          Movies.topRatedMovies[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.topRatedMovies[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.topRatedMovies.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.topRatedMovies[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -242,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -300,20 +339,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.topRatedTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.topRatedTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.topRatedTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.topRatedTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.topRatedTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -325,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,

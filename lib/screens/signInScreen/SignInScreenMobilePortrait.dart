@@ -90,6 +90,7 @@ class _SignInScreenMobilePortraitState
                                 TextFormField(
                                   cursorColor: Color(0xffa637ac),
                                   cursorHeight: 28.0,
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
                                     labelText: 'email',
                                     labelStyle: TextStyle(
@@ -137,6 +138,7 @@ class _SignInScreenMobilePortraitState
                                   cursorHeight: 28.0,
                                   cursorColor: Color(0xff7c1edc),
                                   obscureText: !_showPassword,
+                                  keyboardType: TextInputType.visiblePassword,
                                   decoration: InputDecoration(
                                     errorStyle: TextStyle(fontSize: 15.0),
                                     labelText: 'password',

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:stream_house/responsive/orientationLayout.dart';
 import 'package:stream_house/responsive/screenTypeLayout.dart';
-import 'package:stream_house/screens/mainScreen/mianScreenMobilePortrait.dart';
+import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreenMobilePortrait.dart';
 
-class MainScreen extends StatelessWidget {
-  static const String id = 'MainScreen';
-
+class MovieDetailsScreen extends StatelessWidget {
+  static const String id = 'MovieDetailsScreen';
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
       mobile: OrientationLayout(
-        portrait: (context) => MainScreenMobilePortrait(),
+        portrait: (context) => MovieDetailsScreenMobilePortrait(),
         landscape: (context) {
           //todo: build the landscape mobile layout
           return Container(

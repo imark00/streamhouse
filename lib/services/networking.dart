@@ -218,7 +218,7 @@ class TVShows {
   static Future<List> getDramaTVShows() async {
     try {
       http.Response response = await http.get(
-          '  https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=18&include_null_first_air_dates=false');
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=18&include_null_first_air_dates=false');
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -254,7 +254,7 @@ class TVShows {
   static Future<List> getScienceFictionTVShows() async {
     try {
       http.Response response = await http.get(
-          ' https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false');
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false');
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -290,7 +290,7 @@ class TVShows {
   static Future<List> getAnimationTVShows() async {
     try {
       http.Response response = await http.get(
-          ' https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=16&include_null_first_air_dates=false');
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=16&include_null_first_air_dates=false');
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);

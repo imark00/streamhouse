@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -86,20 +87,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.upcomingMovies.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          Movies.upcomingMovies[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.upcomingMovies[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.upcomingMovies.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.upcomingMovies[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -111,7 +119,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -171,19 +179,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.actionMovies.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(Movies
-                                          .actionMovies[index]['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.actionMovies[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.actionMovies.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.actionMovies[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -195,7 +211,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -255,20 +271,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.scienceFiction.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          Movies.scienceFiction[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.scienceFiction[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.scienceFiction.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.scienceFiction[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -280,7 +303,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -340,19 +363,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.horrorMovies.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(Movies
-                                          .horrorMovies[index]['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.horrorMovies[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.horrorMovies.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.horrorMovies[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -364,7 +395,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
@@ -424,19 +455,27 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Movies.comedyMovies.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(Movies
-                                          .comedyMovies[index]['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(Movies.comedyMovies[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: Movies.comedyMovies.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            Movies.comedyMovies[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -448,7 +487,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: Text(
-                    'Shimmer',
+                    'Loading',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,
