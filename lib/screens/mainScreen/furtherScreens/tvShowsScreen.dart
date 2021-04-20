@@ -15,7 +15,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
     TVShows.getAiringTodayTVShows();
     TVShows.getOnTheAirTVShows();
     TVShows.getDramaTVShows();
-    TVShows.getRomanceTVShows();
+    TVShows.getMysteryTVShows();
     TVShows.getScienceFictionTVShows();
     TVShows.getComedyTVShows();
     TVShows.getAnimationTVShows();
@@ -33,7 +33,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
           SizedBox(height: 8.0),
           _dramaTVShowsDisplay(),
           SizedBox(height: 8.0),
-          _romanceTVShowsDisplay(),
+          _mysteryTVShowsDisplay(),
           SizedBox(height: 8.0),
           _scienceFictionTVShowsDisplay(),
           SizedBox(height: 8.0),
@@ -182,20 +182,27 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.onTheAirTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.onTheAirTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.onTheAirTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.onTheAirTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.onTheAirTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -265,19 +272,27 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.dramaTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(TVShows
-                                          .dramaTVShows[index]['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.dramaTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.dramaTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.dramaTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -303,7 +318,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
     );
   }
 
-  Widget _romanceTVShowsDisplay() {
+  Widget _mysteryTVShowsDisplay() {
     return Container(
       height: 250.0,
       width: double.infinity,
@@ -315,7 +330,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Romance',
+                  'Mystery',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -338,7 +353,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
             ),
           ),
           FutureBuilder(
-              future: TVShows.getRomanceTVShows(),
+              future: TVShows.getMysteryTVShows(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Expanded(
@@ -347,20 +362,27 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.romanceTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.romanceTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.mysteryTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.mysteryTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.mysteryTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -430,21 +452,28 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.scienceFictionTVShows.length ==
-                                      null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.scienceFictionTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.scienceFictionTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.scienceFictionTVShows.length ==
+                                        null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.scienceFictionTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),

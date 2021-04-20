@@ -232,15 +232,15 @@ class TVShows {
     }
   }
 
-  static List romanceTVShows;
-  static Future<List> getRomanceTVShows() async {
+  static List mysteryTVShows;
+  static Future<List> getMysteryTVShows() async {
     try {
       http.Response response = await http.get(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false');
+          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=9648&include_null_first_air_dates=false');
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
-        return romanceTVShows = mapResponse['results'];
+        return mysteryTVShows = mapResponse['results'];
       } else {
         print(response.statusCode);
         throw ('Failed');
