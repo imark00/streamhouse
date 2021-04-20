@@ -543,19 +543,27 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.comedyTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(TVShows
-                                          .comedyTVShows[index]['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.comedyTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.comedyTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.comedyTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -625,20 +633,27 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          width: 120.0,
-                          margin: EdgeInsets.only(left: 10.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: TVShows.animationTVShows.length == null
-                                  ? AssetImage(
-                                      'assets/icons/logoTransparent.png')
-                                  : NetworkImage(
-                                      portraitImagePath(
-                                          TVShows.animationTVShows[index]
-                                              ['poster_path']),
-                                    ),
-                              fit: BoxFit.fill,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            print(TVShows.animationTVShows[index]['id']);
+                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                          },
+                          child: Container(
+                            width: 120.0,
+                            margin: EdgeInsets.only(left: 10.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white38),
+                              image: DecorationImage(
+                                image: TVShows.animationTVShows.length == null
+                                    ? AssetImage(
+                                        'assets/icons/logoTransparent.png')
+                                    : NetworkImage(
+                                        portraitImagePath(
+                                            TVShows.animationTVShows[index]
+                                                ['poster_path']),
+                                      ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
