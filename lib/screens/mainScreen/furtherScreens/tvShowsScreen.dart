@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
+import 'package:stream_house/widgets/display.dart';
 
 class TvShowsScreen extends StatefulWidget {
   @override
@@ -27,659 +29,436 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _airingTodayTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Airing Today',
+            fetchData: FutureBuilder(
+                future: TVShows.getAiringTodayTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.airingTodayTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(TVShows
+                                    .airingTodayTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _onTheAirTVShowsDisplay(),
+          Display(
+            categoryTitle: 'On The Air',
+            fetchData: FutureBuilder(
+                future: TVShows.getOnTheAirTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.onTheAirTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(TVShows
+                                    .onTheAirTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _dramaTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Drama',
+            fetchData: FutureBuilder(
+                future: TVShows.getDramaTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.dramaTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(
+                                    TVShows.dramaTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _mysteryTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Mystery',
+            fetchData: FutureBuilder(
+                future: TVShows.getMysteryTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.mysteryTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(TVShows
+                                    .mysteryTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+//color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+//color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _scienceFictionTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Sci-Fi',
+            fetchData: FutureBuilder(
+                future: TVShows.getScienceFictionTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.scienceFictionTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(
+                                    TVShows.scienceFictionTVShows[index]
+                                        ['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+//color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+//color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _comedyTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Comedy',
+            fetchData: FutureBuilder(
+                future: TVShows.getComedyTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.comedyTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(TVShows
+                                    .comedyTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _animationTVShowsDisplay(),
+          Display(
+            categoryTitle: 'Animation',
+            fetchData: FutureBuilder(
+                future: TVShows.getAnimationTVShows(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(TVShows.animationTVShows[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(TVShows
+                                    .animationTVShows[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0)
         ],
       ),
     );
   }
+}
 
-  Widget _airingTodayTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Airing Today',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getAiringTodayTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.airingTodayTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white38,
-                              ),
-                              image: DecorationImage(
-                                image: TVShows.airingTodayTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.airingTodayTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _onTheAirTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'On The Air',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getOnTheAirTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.onTheAirTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.onTheAirTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.onTheAirTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _dramaTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Drama',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getDramaTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.dramaTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.dramaTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.dramaTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _mysteryTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Mystery',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getMysteryTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.mysteryTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.mysteryTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.mysteryTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _scienceFictionTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Sci-Fi',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getScienceFictionTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.scienceFictionTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.scienceFictionTVShows.length ==
-                                        null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.scienceFictionTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _comedyTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Comedy',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getComedyTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.comedyTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.comedyTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.comedyTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _animationTVShowsDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Animation',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: TVShows.getAnimationTVShows(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(TVShows.animationTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: TVShows.animationTVShows.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            TVShows.animationTVShows[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  String portraitImagePath(String path) {
-    return "https://image.tmdb.org/t/p/original/$path";
-  }
+String portraitImagePath(String path) {
+  return "https://image.tmdb.org/t/p/original/$path";
 }

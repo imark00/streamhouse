@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/widgets/display.dart';
 
 class MoviesScreen extends StatefulWidget {
   @override
@@ -26,482 +28,317 @@ class _MoviesScreenState extends State<MoviesScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _upcomingMoviesDisplay(),
+          Display(
+            categoryTitle: 'Upcoming',
+            fetchData: FutureBuilder(
+                future: Movies.getUpcomingMovies(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(Movies.upcomingMovies[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(Movies
+                                    .upcomingMovies[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _actionMoviesDisplay(),
+          Display(
+            categoryTitle: 'Horror',
+            fetchData: FutureBuilder(
+                future: Movies.getHorrorMovies(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(Movies.horrorMovies[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(
+                                    Movies.horrorMovies[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _scienceFictionMoviesDisplay(),
+          Display(
+            categoryTitle: 'Action',
+            fetchData: FutureBuilder(
+                future: Movies.getActionMovies(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(Movies.actionMovies[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(
+                                    Movies.actionMovies[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _horrorMoviesDisplay(),
+          Display(
+            categoryTitle: 'Comedy',
+            fetchData: FutureBuilder(
+                future: Movies.getComedyMovies(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(Movies.comedyMovies[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(
+                                    Movies.comedyMovies[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0),
-          _comedyMoviesDisplay(),
+          Display(
+            categoryTitle: 'Sci-Fi',
+            fetchData: FutureBuilder(
+                future: Movies.getScienceFictionMovies(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              print(Movies.scienceFiction[index]['id']);
+                              Navigator.pushNamed(
+                                  context, MovieDetailsScreen.id);
+                            },
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: portraitImagePath(Movies
+                                    .scienceFiction[index]['poster_path']),
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    color: Colors.white,
+                                    height: 200.0,
+                                    width: 120,
+                                    //color: Color(0xff063048),
+                                  ),
+                                  baseColor: Color(0xff063048),
+                                  highlightColor: Colors.grey.withOpacity(0.0),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white38),
+                              ),
+                              width: 120,
+                              margin: EdgeInsets.only(left: 10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return Shimmer.fromColors(
+                    baseColor: Color(0xff063048),
+                    highlightColor: Colors.grey.withOpacity(0.0),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20.0),
+                      color: Colors.white,
+                      height: 200.0,
+                      width: double.infinity,
+                      //color: Color(0xff063048),
+                    ),
+                  );
+                }),
+          ),
           SizedBox(height: 8.0)
         ],
       ),
     );
   }
+}
 
-  Widget _upcomingMoviesDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Upcoming',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  padding: EdgeInsets.all(0.0),
-                  splashColor: Colors.white12,
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: Movies.getUpcomingMovies(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(Movies.upcomingMovies[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: Movies.upcomingMovies.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            Movies.upcomingMovies[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _actionMoviesDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Action',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  padding: EdgeInsets.all(0.0),
-                  splashColor: Colors.white12,
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: Movies.getActionMovies(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(Movies.actionMovies[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: Movies.actionMovies.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            Movies.actionMovies[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _scienceFictionMoviesDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Sci-Fi',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  padding: EdgeInsets.all(0.0),
-                  splashColor: Colors.white12,
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: Movies.getScienceFictionMovies(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(Movies.scienceFiction[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: Movies.scienceFiction.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            Movies.scienceFiction[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _horrorMoviesDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Horror',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  padding: EdgeInsets.all(0.0),
-                  splashColor: Colors.white12,
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: Movies.getHorrorMovies(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(Movies.horrorMovies[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: Movies.horrorMovies.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            Movies.horrorMovies[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _comedyMoviesDisplay() {
-    return Container(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Comedy',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    print('view more');
-                  },
-                  padding: EdgeInsets.all(0.0),
-                  splashColor: Colors.white12,
-                  child: Text(
-                    'view more',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-              future: Movies.getComedyMovies(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: Container(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            print(Movies.comedyMovies[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
-                          },
-                          child: Container(
-                            width: 120.0,
-                            margin: EdgeInsets.only(left: 10.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white38),
-                              image: DecorationImage(
-                                image: Movies.comedyMovies.length == null
-                                    ? AssetImage(
-                                        'assets/icons/logoTransparent.png')
-                                    : NetworkImage(
-                                        portraitImagePath(
-                                            Movies.comedyMovies[index]
-                                                ['poster_path']),
-                                      ),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  baseColor: Colors.red,
-                  highlightColor: Colors.yellow,
-                  child: Text(
-                    'Loading',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  String portraitImagePath(String path) {
-    return "https://image.tmdb.org/t/p/original/$path";
-  }
+String portraitImagePath(String path) {
+  return "https://image.tmdb.org/t/p/original/$path";
 }

@@ -10,11 +10,12 @@ class _MovieDetailsScreenMobilePortraitState
     extends State<MovieDetailsScreenMobilePortrait> {
   @override
   Widget build(BuildContext context) {
+    String movieId = ModalRoute.of(context).settings.arguments;
     return Scaffold(
+      backgroundColor: Color(0xff063048),
       body: Container(
-        color: Colors.white,
         child: Text(
-          'The serious business is about to start \n-Dembele',
+          movieId,
           style: TextStyle(
             fontSize: 36.0,
           ),
