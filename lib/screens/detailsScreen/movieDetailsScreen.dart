@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flick_video_player/flick_video_player.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stream_house/services/networking.dart';
-import 'package:video_player/video_player.dart';
+
 import 'dart:ui';
 
 class MovieDetailsScreen extends StatefulWidget {
@@ -15,22 +15,6 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  FlickManager flickManager;
-  @override
-  void initState() {
-    super.initState();
-    flickManager = FlickManager(
-      videoPlayerController:
-          VideoPlayerController.network(Movie.movieVideoURL()),
-    );
-  }
-
-  @override
-  void dispose() {
-    flickManager.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -61,7 +45,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ],
                 ),
               ),
-              buttons(context, widget.id, flickManager),
+              buttons(context, widget.id),
               movieOverview(context),
               movieCast(context, widget.id),
               SizedBox(
@@ -244,17 +228,14 @@ Widget movieHeaderDisplay(BuildContext context) => Positioned.fill(
       ),
     );
 
-Widget buttons(BuildContext context, String id, FlickManager flickManager) =>
-    Padding(
+Widget buttons(BuildContext context, String id) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: () {
-              Container(
-                child: FlickVideoPlayer(flickManager: flickManager),
-              );
+              Movie.movieVideoURL();
             },
             //todo: as user taps this play movie
             child: Column(
