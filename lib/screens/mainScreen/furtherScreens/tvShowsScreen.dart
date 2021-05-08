@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
+import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:stream_house/widgets/display.dart';
 
@@ -45,7 +45,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.airingTodayTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -106,7 +106,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.onTheAirTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -167,7 +167,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.dramaTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -228,7 +228,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.mysteryTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -289,7 +289,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.scienceFictionTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -351,7 +351,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.comedyTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -410,7 +410,7 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                             onTap: () {
                               print(TVShows.animationTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                  context, DetailsScreen.id);
                             },
                             child: Container(
                               child: CachedNetworkImage(

@@ -306,5 +306,161 @@ class TVShows {
 }
 
 class Movie {
-  Future getMovieDetails(String movieId)
+  static Map movieDetails;
+  static Future getMovieDetails(String movieId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/movie/$movieId?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        return movieDetails = jsonDecode(response.body);
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List movieCast;
+  static Future getMovieCast(String movieId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/movie/$movieId/credits?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return movieCast = mapResponse['cast'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List recommendedMovies;
+  static Future getRecommendedMovies(String movieId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/movie/$movieId/recommendations?api_key=$kApiKey&language=en-US&page=1'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return recommendedMovies = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {}
+  }
+
+  static List movieVideo;
+  static Future getMovieVideo(int movieId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/movie/$movieId/videos?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return movieVideo = mapResponse['results'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+
+class TVShow {
+  static Map tvShowDetails;
+  static Future getTVShowDetails(String tvShowId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/tv/$tvShowId?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        return tvShowDetails = jsonDecode(response.body);
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List tvShowEpisodes;
+  static Future getTVShowEpisodes(int tvShowId, int seasonNumber) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/tv/$tvShowId/season/$seasonNumber?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return tvShowEpisodes = mapResponse['episodes'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List tvShowsCast;
+  static Future getTVShowCast(int tvShowId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/tv/$tvShowId/credits?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return tvShowsCast = mapResponse['cast'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List similarTVShows;
+  static Future getSimilarTVShows(int tvShowId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/tv/$tvShowId/similar?api_key=$kApiKey&language=en-US&page=1'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return similarTVShows = mapResponse['results'];
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static List tvShowVideo;
+  static Future getTVShowVideo(int tvShowId) async {
+    try {
+      http.Response response = await http.get(Uri.parse(
+          'https://$kURL/tv/$tvShowId/videos?api_key=$kApiKey&language=en-US'));
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return tvShowVideo = mapResponse['results'];
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+
+String imagePath(String path) {
+  return "https://image.tmdb.org/t/p/original/$path";
 }

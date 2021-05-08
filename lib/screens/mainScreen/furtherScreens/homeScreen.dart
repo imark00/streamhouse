@@ -2,29 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stream_house/widgets/display.dart';
-import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
+import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  String movieId;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    TrendingMovies.getTrendingMovies();
-    TrendingTVShows.getTrendingTVShows();
-    Movies.getTopRatedMovies();
-    TVShows.getTopRatedTVShows();
-    super.initState();
-  }
+  // void initState() {
+  //   TrendingMovies.getTrendingMovies();
+  //   TrendingTVShows.getTrendingTVShows();
+  //   Movies.getTopRatedMovies();
+  //   TVShows.getTopRatedTVShows();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    String id;
+    String type = "";
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -42,19 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              widget.movieId = TrendingMovies
-                                  .trendingMovies[index]['id']
-                                  .toString();
-                              print(widget.movieId);
                               Navigator.pushNamed(
                                 context,
-                                MovieDetailsScreen.id,
-                                arguments: widget.movieId,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = TrendingMovies.trendingMovies[index]
+                                          ['id']
+                                      .toString(),
+                                  type = 'movie',
+                                ],
                               );
+                              print(id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(TrendingMovies
+                                imageUrl: imagePath(TrendingMovies
                                     .trendingMovies[index]['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
@@ -110,11 +113,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
                             print(TrendingTVShows.trendingTVShows[index]['id']);
-                            Navigator.pushNamed(context, MovieDetailsScreen.id);
+                            Navigator.pushNamed(
+                              context,
+                              DetailsScreen.id,
+                              arguments: [
+                                id = TrendingTVShows.trendingTVShows[index]
+                                        ['id']
+                                    .toString(),
+                                type = 'tvShow',
+                              ],
+                            );
                           },
                           child: Container(
                             child: CachedNetworkImage(
-                              imageUrl: portraitImagePath(TrendingTVShows
+                              imageUrl: imagePath(TrendingTVShows
                                   .trendingTVShows[index]['poster_path']),
                               fit: BoxFit.fill,
                               placeholder: (context, url) => Shimmer.fromColors(
@@ -171,12 +183,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               print(Movies.topRatedMovies[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.topRatedMovies[index]['id']
+                                      .toString(),
+                                  type = 'movie',
+                                ],
+                              );
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(Movies
-                                    .topRatedMovies[index]['poster_path']),
+                                imageUrl: imagePath(Movies.topRatedMovies[index]
+                                    ['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
                                     Shimmer.fromColors(
@@ -232,11 +251,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               print(TVShows.topRatedTVShows[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = TVShows.topRatedTVShows[index]['id']
+                                      .toString(),
+                                  type = 'tvShow',
+                                ],
+                              );
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(TVShows
+                                imageUrl: imagePath(TVShows
                                     .topRatedTVShows[index]['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
@@ -283,6 +309,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-String portraitImagePath(String path) {
+String imagePath(String path) {
   return "https://image.tmdb.org/t/p/original/$path";
 }

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:stream_house/screens/movieDetailsScreen/movieDetailsScreen.dart';
+import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stream_house/widgets/display.dart';
@@ -14,17 +14,19 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
   @override
-  void initState() {
-    Movies.getUpcomingMovies();
-    Movies.getActionMovies();
-    Movies.getScienceFictionMovies();
-    Movies.getHorrorMovies();
-    Movies.getComedyMovies();
-    super.initState();
-  }
+  // void initState() {
+  //   Movies.getUpcomingMovies();
+  //   Movies.getActionMovies();
+  //   Movies.getScienceFictionMovies();
+  //   Movies.getHorrorMovies();
+  //   Movies.getComedyMovies();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    String id = '';
+    String type = 'movie';
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -42,9 +44,17 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(Movies.upcomingMovies[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.upcomingMovies[index]['id']
+                                      .toString(),
+                                  type,
+                                ],
+                              );
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -103,9 +113,17 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(Movies.horrorMovies[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.horrorMovies[index]['id']
+                                      .toString(),
+                                  type,
+                                ],
+                              );
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -164,9 +182,17 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(Movies.actionMovies[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.actionMovies[index]['id']
+                                      .toString(),
+                                  type,
+                                ],
+                              );
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -225,9 +251,17 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(Movies.comedyMovies[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.comedyMovies[index]['id']
+                                      .toString(),
+                                  type,
+                                ],
+                              );
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -286,9 +320,17 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(Movies.scienceFiction[index]['id']);
                               Navigator.pushNamed(
-                                  context, MovieDetailsScreen.id);
+                                context,
+                                DetailsScreen.id,
+                                arguments: [
+                                  id = Movies.scienceFiction[index]['id']
+                                      .toString(),
+                                  type,
+                                ],
+                              );
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
