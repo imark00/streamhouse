@@ -307,13 +307,24 @@ class TVShows {
 
 class Movie {
   static Map movieDetails;
+  static String movieVideoKey;
   static Future getMovieDetails(String movieId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/$movieId?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/movie/$movieId?api_key=$kApiKey&language=en-US&append_to_response=videos'));
 
       if (response.statusCode == 200) {
-        return movieDetails = jsonDecode(response.body);
+        movieDetails = jsonDecode(response.body);
+
+        for (var i = 0; i < movieDetails['videos']['results'].length; i++) {
+          if (movieDetails['videos']['results'][i]['name'] ==
+                  "Official Trailer" ||
+              movieDetails['videos']['results'][i]['type'] == "Trailer") {
+            return movieVideoKey = movieDetails['videos']['results'][i]['key'];
+          }
+        }
+
+        return movieDetails;
       } else {
         print(response.statusCode);
         throw ('Failed');
@@ -321,6 +332,10 @@ class Movie {
     } catch (e) {
       print(e);
     }
+  }
+
+  static String movieVideoURL() {
+    return 'https://www.youtube.com/watch?v=$movieVideoKey';
   }
 
   static List movieCast;
@@ -355,24 +370,6 @@ class Movie {
         throw ('Failed');
       }
     } catch (e) {}
-  }
-
-  static List movieVideo;
-  static Future getMovieVideo(int movieId) async {
-    try {
-      http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/$movieId/videos?api_key=$kApiKey&language=en-US'));
-
-      if (response.statusCode == 200) {
-        Map mapResponse = jsonDecode(response.body);
-        return movieVideo = mapResponse['results'];
-      } else {
-        print(response.statusCode);
-        throw ('Failed');
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 }
 
