@@ -36,11 +36,7 @@ dependencies:
   http: ^0.13.1
   shimmer: ^2.0.0
   cached_network_image: ^3.0.0
-  video_player: ^2.1.1
-  chewie: ^1.0.0
-  #better_player: ^0.0.65
-  #flutter_vector_icons: ^1.0.0
-  #flick_video_player: ^0.3.0
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_test:

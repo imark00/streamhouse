@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stream_house/services/networking.dart';
-
 import 'dart:ui';
+
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String id;
@@ -235,7 +235,13 @@ Widget buttons(BuildContext context, String id) => Padding(
         children: [
           GestureDetector(
             onTap: () {
-              Movie.movieVideoURL();
+              // Movie.movieVideoURL();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        VideoPlayerScreen(movieID: Movie.movieVideoURL())),
+              );
             },
             //todo: as user taps this play movie
             child: Column(
@@ -429,7 +435,7 @@ Widget movieRecommendations(BuildContext context, String id) => Container(
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 6,
+                      itemCount: 4,
                       itemBuilder: (context, index) {
                         return Container(
                           width: 120,
@@ -475,3 +481,91 @@ Widget movieRecommendations(BuildContext context, String id) => Container(
         ],
       ),
     );
+
+class VideoPlayerScreen extends StatefulWidget {
+  final String movieID;
+
+  const VideoPlayerScreen({Key key, @required this.movieID}) : super(key: key);
+
+  @override
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+}
+
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  YoutubePlayerController _youtubePlayerController;
+  @override
+  void initState() {
+    _youtubePlayerController = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.movieID),
+      flags: YoutubePlayerFlags(
+        controlsVisibleAtStart: true,
+        mute: false,
+        autoPlay: true,
+      ),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _youtubePlayerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.pink,
+      body: Center(
+        child: YoutubePlayer(
+          controller: _youtubePlayerController,
+          showVideoProgressIndicator: true,
+          onReady: () {
+            print('Ready');
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// class ChewieClass extends StatefulWidget {
+//   final VideoPlayerController videoPlayerController;
+//
+//   const ChewieClass({Key key, @required this.videoPlayerController})
+//       : super(key: key);
+//
+//   @override
+//   _ChewieClassState createState() => _ChewieClassState();
+// }
+//
+// class _ChewieClassState extends State<ChewieClass> {
+//   ChewieController _chewieController;
+//
+//   @override
+//   void initState() {
+//     _chewieController = ChewieController(
+//       videoPlayerController: widget.videoPlayerController,
+//       aspectRatio: 16 / 9,
+//       autoPlay: true,
+//       looping: true,
+//     );
+//     super.initState();
+//   }
+//
+//   @override
+//   void dispose() {
+//     widget.videoPlayerController.dispose();
+//     _chewieController.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Chewie(
+//         controller: _chewieController,
+//       ),
+//     );
+//   }
+// }
