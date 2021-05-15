@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/screens/videoPlayerScreen/videoPlayerScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'dart:ui';
-
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String id;
@@ -15,48 +19,321 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  bool subscribed = false;
+  final _formKey = GlobalKey<FormState>();
+  String name, cardNumber, cardExpiryDate, cardCVV;
+  bool showLoader = false;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        CachedNetworkImage(
-          imageUrl: imagePath(Movie.movieDetails['poster_path']),
-          fit: BoxFit.cover,
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 9.0),
-          child: Container(
-            color: Colors.black.withOpacity(0.7),
+    return ModalProgressHUD(
+      inAsyncCall: showLoader,
+      progressIndicator: CircularProgressIndicator(
+        backgroundColor: Color(0xffa637ac),
+        strokeWidth: 5.0,
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CachedNetworkImage(
+            imageUrl: imagePath(Movie.movieDetails['poster_path']),
+            fit: BoxFit.cover,
           ),
-        ),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 435,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    movieBannerDisplay(context),
-                    moviePosterDisplay(context),
-                    movieHeaderDisplay(context),
-                  ],
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 9.0),
+            child: Container(
+              color: Colors.black.withOpacity(0.7),
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 435,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      movieBannerDisplay(context),
+                      moviePosterDisplay(context),
+                      movieHeaderDisplay(context),
+                    ],
+                  ),
                 ),
-              ),
-              buttons(context, widget.id),
-              movieOverview(context),
-              movieCast(context, widget.id),
-              SizedBox(
-                height: 10.0,
-              ),
-              movieRecommendations(context, widget.id),
-              SizedBox(height: 20.0),
-            ],
-          ),
-        )
-      ],
+                // buttons(context, widget.id, subscribed, _formKey, name,
+                //     cardNumber, cardExpiryDate, cardCVV),
+                subscribed
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 80.0, vertical: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // Movie.movieVideoURL();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VideoPlayerScreen(
+                                          movieID: Movie.movieVideoURL())),
+                                );
+                              },
+                              //todo: as user taps this play movie
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.play_circle_outline,
+                                    color: Colors.white,
+                                    size: 55.0,
+                                  ),
+                                  Text(
+                                    'Play',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => print('Add To Favorite pressed'),
+                              //todo: as user taps this add movie to favorite list
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: Colors.white,
+                                    size: 55.0,
+                                  ),
+                                  Text(
+                                    'Add To Favorite',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => print('Download pressed'),
+                              //todo: as user taps this download movie
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_circle_down_sharp,
+                                    color: Colors.white,
+                                    size: 55.0,
+                                  ),
+                                  Text(
+                                    'Download',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                setState(() {
+                                  showLoader = !showLoader;
+                                });
+                                String url = 'https://google.com/';
+                                if (await canLaunch(url)) {
+                                  await launch(
+                                    url,
+                                    forceSafariVC: true,
+                                    forceWebView: true,
+                                    enableJavaScript: true,
+                                  );
+                                  setState(() {
+                                    showLoader = !showLoader;
+                                  });
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                                // showModalBottomSheet(
+                                //     shape: RoundedRectangleBorder(
+                                //         borderRadius: BorderRadius.vertical(
+                                //             top: Radius.circular(30.0))),
+                                //     backgroundColor: Colors.white,
+                                //     context: context,
+                                //     isScrollControlled: true,
+                                //     isDismissible: false,
+                                //     builder: (context) {
+                                //       return Padding(
+                                //         padding: const EdgeInsets.symmetric(
+                                //             horizontal: 20, vertical: 8.0),
+                                //         child: SingleChildScrollView(
+                                //           child: Column(
+                                //             crossAxisAlignment:
+                                //                 CrossAxisAlignment.start,
+                                //             mainAxisSize: MainAxisSize.min,
+                                //             children: <Widget>[
+                                //               Align(
+                                //                 alignment: Alignment.topRight,
+                                //                 child: IconButton(
+                                //                     icon: Icon(Ionicons
+                                //                         .close_circle_outline),
+                                //                     //padding: EdgeInsets.only(right: 30.0, top: 10.0),
+                                //                     splashRadius: 20.0,
+                                //                     iconSize: 30.0,
+                                //                     onPressed: () {
+                                //                       Navigator.pop(context);
+                                //                     }),
+                                //               ),
+                                //               Text(
+                                //                 'Set up your payment',
+                                //                 style: TextStyle(
+                                //                     fontSize: 28.0,
+                                //                     fontWeight: FontWeight.w500),
+                                //               ),
+                                //               Form(
+                                //                 key: _formKey,
+                                //                 child: Column(
+                                //                   children: [
+                                //                     TextFormField(
+                                //                       decoration: InputDecoration(
+                                //                         labelText: 'Name',
+                                //                       ),
+                                //                       onChanged: (String nom) {
+                                //                         name = nom;
+                                //                       },
+                                //                       validator: (nom) {
+                                //                         if (nom.isEmpty) {
+                                //                           return 'enter name';
+                                //                         }
+                                //                         return null;
+                                //                       },
+                                //                     ),
+                                //                     TextFormField(
+                                //                       decoration: InputDecoration(
+                                //                           labelText:
+                                //                               'Card Number'),
+                                //                       onChanged:
+                                //                           (String cardNum) {
+                                //                         cardNumber = cardNum;
+                                //                       },
+                                //                       validator: (cardNum) {
+                                //                         if (cardNum.isEmpty) {
+                                //                           return 'enter card number';
+                                //                         }
+                                //                         return null;
+                                //                       },
+                                //                     ),
+                                //                     TextFormField(
+                                //                       decoration: InputDecoration(
+                                //                           labelText:
+                                //                               'expiry date (mm/yyyy)'),
+                                //                       onChanged:
+                                //                           (String expiryDate) {
+                                //                         cardExpiryDate =
+                                //                             expiryDate;
+                                //                       },
+                                //                       validator: (expiryDate) {
+                                //                         if (expiryDate.isEmpty) {
+                                //                           return 'enter expiry date';
+                                //                         }
+                                //                         return null;
+                                //                       },
+                                //                     ),
+                                //                     TextFormField(
+                                //                       decoration: InputDecoration(
+                                //                           labelText:
+                                //                               'Security Code (CVV)'),
+                                //                       onChanged: (String cvv) {
+                                //                         cardCVV = cvv;
+                                //                       },
+                                //                       validator: (cvv) {
+                                //                         if (cvv.isEmpty) {
+                                //                           return 'enter security code';
+                                //                         }
+                                //                         return null;
+                                //                       },
+                                //                     ),
+                                //                     SizedBox(height: 30.0),
+                                //                     RoundedRaisedButton(
+                                //                         buttonText: 'Complete',
+                                //                         onPressed: () {
+                                //                           if (_formKey
+                                //                               .currentState
+                                //                               .validate()) {
+                                //                             print(name);
+                                //                             print(cardNumber);
+                                //                             print(cardExpiryDate);
+                                //                             print(cardCVV);
+                                //                           }
+                                //                         }),
+                                //                   ],
+                                //                 ),
+                                //               ),
+                                //               SizedBox(height: 10),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       );
+                                //     });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.yellow[600],
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 60.0, vertical: 20.0),
+                              ),
+                              child: Text(
+                                'Subscribe',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => print('Add To Favorite pressed'),
+                              //todo: as user taps this add movie to favorite list
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: Colors.white,
+                                    size: 30.0,
+                                  ),
+                                  Text(
+                                    'Add To Favorite',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                movieOverview(context),
+                movieCast(context, widget.id),
+                SizedBox(
+                  height: 10.0,
+                ),
+                movieRecommendations(context, widget.id),
+                SizedBox(height: 20.0),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -223,83 +500,6 @@ Widget movieHeaderDisplay(BuildContext context) => Positioned.fill(
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-
-Widget buttons(BuildContext context, String id) => Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              // Movie.movieVideoURL();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        VideoPlayerScreen(movieID: Movie.movieVideoURL())),
-              );
-            },
-            //todo: as user taps this play movie
-            child: Column(
-              children: [
-                Icon(
-                  Icons.play_circle_outline,
-                  color: Colors.white,
-                  size: 55.0,
-                ),
-                Text(
-                  'Play',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () => print('Add To Favorite pressed'),
-            //todo: as user taps this add movie to favorite list
-            child: Column(
-              children: [
-                Icon(
-                  Icons.add_circle_outline_sharp,
-                  color: Colors.white,
-                  size: 55.0,
-                ),
-                Text(
-                  'Add To Favorite',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () => print('Download pressed'),
-            //todo: as user taps this download movie
-            child: Column(
-              children: [
-                Icon(
-                  Icons.arrow_circle_down_sharp,
-                  color: Colors.white,
-                  size: 55.0,
-                ),
-                Text(
-                  'Download',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -481,91 +681,3 @@ Widget movieRecommendations(BuildContext context, String id) => Container(
         ],
       ),
     );
-
-class VideoPlayerScreen extends StatefulWidget {
-  final String movieID;
-
-  const VideoPlayerScreen({Key key, @required this.movieID}) : super(key: key);
-
-  @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
-}
-
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  YoutubePlayerController _youtubePlayerController;
-  @override
-  void initState() {
-    _youtubePlayerController = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.movieID),
-      flags: YoutubePlayerFlags(
-        controlsVisibleAtStart: true,
-        mute: false,
-        autoPlay: true,
-      ),
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _youtubePlayerController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink,
-      body: Center(
-        child: YoutubePlayer(
-          controller: _youtubePlayerController,
-          showVideoProgressIndicator: true,
-          onReady: () {
-            print('Ready');
-          },
-        ),
-      ),
-    );
-  }
-}
-
-// class ChewieClass extends StatefulWidget {
-//   final VideoPlayerController videoPlayerController;
-//
-//   const ChewieClass({Key key, @required this.videoPlayerController})
-//       : super(key: key);
-//
-//   @override
-//   _ChewieClassState createState() => _ChewieClassState();
-// }
-//
-// class _ChewieClassState extends State<ChewieClass> {
-//   ChewieController _chewieController;
-//
-//   @override
-//   void initState() {
-//     _chewieController = ChewieController(
-//       videoPlayerController: widget.videoPlayerController,
-//       aspectRatio: 16 / 9,
-//       autoPlay: true,
-//       looping: true,
-//     );
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     widget.videoPlayerController.dispose();
-//     _chewieController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Chewie(
-//         controller: _chewieController,
-//       ),
-//     );
-//   }
-// }

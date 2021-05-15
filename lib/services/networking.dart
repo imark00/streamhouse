@@ -8,8 +8,8 @@ class TrendingMovies {
   static List trendingMovies;
   static Future getTrendingMovies() async {
     try {
-      http.Response response = await http
-          .get(Uri.parse('https://$kURL/trending/movie/day?api_key=$kApiKey'));
+      http.Response response = await http.get(
+          Uri.parse('https://$kURL/trending/movie/day?api_key=$kMovieApiKey'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -29,8 +29,8 @@ class TrendingTVShows {
   static List trendingTVShows;
   static Future getTrendingTVShows() async {
     try {
-      http.Response response = await http
-          .get(Uri.parse('https://$kURL/trending/tv/day?api_key=$kApiKey'));
+      http.Response response = await http.get(
+          Uri.parse('https://$kURL/trending/tv/day?api_key=$kMovieApiKey'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -51,7 +51,7 @@ class Movies {
   static Future<List> getUpcomingMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/upcoming?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/movie/upcoming?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -70,7 +70,7 @@ class Movies {
   static Future<List> getTopRatedMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/top_rated?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/movie/top_rated?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode((response.body));
@@ -90,7 +90,7 @@ class Movies {
   static Future<List> getActionMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/movie?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28'));
+          'https://$kURL/discover/movie?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -108,7 +108,7 @@ class Movies {
   static Future<List> getScienceFictionMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/movie?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878'));
+          'https://$kURL/discover/movie?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -126,7 +126,7 @@ class Movies {
   static Future<List> getHorrorMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/movie?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=27'));
+          'https://$kURL/discover/movie?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=27'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -144,7 +144,7 @@ class Movies {
   static Future<List> getComedyMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/movie?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=35'));
+          'https://$kURL/discover/movie?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=35'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -164,7 +164,7 @@ class TVShows {
   static Future<List> getTopRatedTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/top_rated?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/tv/top_rated?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -182,7 +182,7 @@ class TVShows {
   static Future<List> getAiringTodayTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/airing_today?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/tv/airing_today?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -200,7 +200,7 @@ class TVShows {
   static Future<List> getOnTheAirTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/on_the_air?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/tv/on_the_air?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -218,7 +218,7 @@ class TVShows {
   static Future<List> getDramaTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=18&include_null_first_air_dates=false'));
+          'https://$kURL/discover/tv?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=18&include_null_first_air_dates=false'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -236,7 +236,7 @@ class TVShows {
   static Future<List> getMysteryTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=9648&include_null_first_air_dates=false'));
+          'https://$kURL/discover/tv?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=9648&include_null_first_air_dates=false'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -254,7 +254,7 @@ class TVShows {
   static Future<List> getScienceFictionTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false'));
+          'https://$kURL/discover/tv?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=878&include_null_first_air_dates=false'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -272,7 +272,7 @@ class TVShows {
   static Future<List> getComedyTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=35&include_null_first_air_dates=false'));
+          'https://$kURL/discover/tv?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=35&include_null_first_air_dates=false'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -290,7 +290,7 @@ class TVShows {
   static Future<List> getAnimationTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/discover/tv?api_key=$kApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=16&include_null_first_air_dates=false'));
+          'https://$kURL/discover/tv?api_key=$kMovieApiKey&language=en-US&sort_by=popularity.desc&page=1&with_genres=16&include_null_first_air_dates=false'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -311,7 +311,7 @@ class Movie {
   static Future getMovieDetails(String movieId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/$movieId?api_key=$kApiKey&language=en-US&append_to_response=videos'));
+          'https://$kURL/movie/$movieId?api_key=$kMovieApiKey&language=en-US&append_to_response=videos'));
 
       if (response.statusCode == 200) {
         movieDetails = jsonDecode(response.body);
@@ -342,7 +342,7 @@ class Movie {
   static Future getMovieCast(String movieId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/$movieId/credits?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/movie/$movieId/credits?api_key=$kMovieApiKey&language=en-US'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -360,7 +360,7 @@ class Movie {
   static Future getRecommendedMovies(String movieId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/$movieId/recommendations?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/movie/$movieId/recommendations?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -378,7 +378,7 @@ class TVShow {
   static Future getTVShowDetails(String tvShowId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/tv/$tvShowId?api_key=$kMovieApiKey&language=en-US'));
 
       if (response.statusCode == 200) {
         return tvShowDetails = jsonDecode(response.body);
@@ -395,7 +395,7 @@ class TVShow {
   static Future getTVShowEpisodes(int tvShowId, int seasonNumber) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/season/$seasonNumber?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/tv/$tvShowId/season/$seasonNumber?api_key=$kMovieApiKey&language=en-US'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -413,7 +413,7 @@ class TVShow {
   static Future getTVShowCast(int tvShowId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/credits?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/tv/$tvShowId/credits?api_key=$kMovieApiKey&language=en-US'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -431,7 +431,7 @@ class TVShow {
   static Future getSimilarTVShows(int tvShowId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/similar?api_key=$kApiKey&language=en-US&page=1'));
+          'https://$kURL/tv/$tvShowId/similar?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -446,7 +446,7 @@ class TVShow {
   static Future getTVShowVideo(int tvShowId) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/videos?api_key=$kApiKey&language=en-US'));
+          'https://$kURL/tv/$tvShowId/videos?api_key=$kMovieApiKey&language=en-US'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -460,4 +460,25 @@ class TVShow {
 
 String imagePath(String path) {
   return "https://image.tmdb.org/t/p/original/$path";
+}
+
+class PaymentMethods {
+  static List subscriptionList;
+  static Future checkIfUserIsSubscribed() async {
+    try {
+      http.Response response = await http.get(
+          Uri.parse('https://api.paystack.co/subscription/'),
+          headers: {'Authorization': kPaymentApiKey});
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+        return subscriptionList = mapResponse['data'];
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }
