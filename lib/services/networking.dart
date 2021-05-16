@@ -463,8 +463,9 @@ String imagePath(String path) {
 }
 
 class PaymentMethods {
-  static List subscriptionList;
-  static Future checkIfUserIsSubscribed() async {
+  static bool subscribed;
+  static Future checkIfUserIsSubscribed(String email) async {
+    List subscriptionList;
     try {
       http.Response response = await http.get(
           Uri.parse('https://api.paystack.co/subscription/'),
@@ -472,13 +473,71 @@ class PaymentMethods {
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
-        return subscriptionList = mapResponse['data'];
+        subscriptionList = mapResponse['data'];
+
+        for (int i = 0; i < subscriptionList.length; i++) {
+          if (subscriptionList[i]['customer']['email'] == email) {
+            return subscribed = true;
+          } else {
+            return subscribed = false;
+          }
+        }
       } else {
         print(response.statusCode);
         throw ('Failed');
       }
     } catch (e) {
       throw (e);
+    }
+  }
+
+  static String authorizationURL;
+  static String referenceCode;
+  static Future initializePayment(String email) async {
+    try {
+      http.Response response = await http.post(
+          Uri.parse('https://api.paystack.co/transaction/initialize'),
+          headers: {'Authorization': kPaymentApiKey},
+          body: jsonEncode({
+            'email': email,
+            'plan': kSubscriptionPlanCode,
+            'amount': 20,
+          }));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map mapResponse = jsonDecode(response.body);
+        authorizationURL = mapResponse['data']['authorization_url'];
+        referenceCode = mapResponse['data']['reference'];
+        print(authorizationURL);
+        print(referenceCode);
+      } else {
+        print(response.statusCode);
+        throw ('Failed');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static bool paymentVerification;
+  static Future verifyPayment(String code) async {
+    try {
+      http.Response response = await http.get(
+          Uri.parse('https://api.paystack.co/transaction/verify/$code/'),
+          headers: {'Authorization': kPaymentApiKey});
+
+      if (response.statusCode == 200) {
+        Map mapResponse = jsonDecode(response.body);
+
+        if (mapResponse['data']['reference'] == code &&
+            mapResponse['data']['gateway_response'] == 'Successful') {
+          return paymentVerification = true;
+        } else {
+          return paymentVerification = false;
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

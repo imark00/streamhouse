@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/videoPlayerScreen/videoPlayerScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'dart:ui';
@@ -19,13 +21,15 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  bool subscribed = false;
-  final _formKey = GlobalKey<FormState>();
-  String name, cardNumber, cardExpiryDate, cardCVV;
+  // bool subscribed = false;
+  //final _formKey = GlobalKey<FormState>();
+  //String name, cardNumber, cardExpiryDate, cardCVV;
   bool showLoader = false;
+  bool subscribed;
 
   @override
   Widget build(BuildContext context) {
+    String email = Provider.of<UserModel>(context).email;
     return ModalProgressHUD(
       inAsyncCall: showLoader,
       progressIndicator: CircularProgressIndicator(
@@ -60,268 +64,171 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     ],
                   ),
                 ),
-                // buttons(context, widget.id, subscribed, _formKey, name,
-                //     cardNumber, cardExpiryDate, cardCVV),
-                subscribed
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 80.0, vertical: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Movie.movieVideoURL();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => VideoPlayerScreen(
-                                          movieID: Movie.movieVideoURL())),
-                                );
-                              },
-                              //todo: as user taps this play movie
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.play_circle_outline,
-                                    color: Colors.white,
-                                    size: 55.0,
-                                  ),
-                                  Text(
-                                    'Play',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                FutureBuilder(
+                    future: PaymentMethods.checkIfUserIsSubscribed(email),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        subscribed = PaymentMethods.subscribed;
+                        return subscribed
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 80.0, vertical: 5.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Movie.movieVideoURL();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VideoPlayerScreen(
+                                                      movieID: Movie
+                                                          .movieVideoURL())),
+                                        );
+                                      },
+                                      //todo: as user taps this play movie
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.play_circle_outline,
+                                            color: Colors.white,
+                                            size: 55.0,
+                                          ),
+                                          Text(
+                                            'Play',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => print('Add To Favorite pressed'),
-                              //todo: as user taps this add movie to favorite list
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.add_circle_outline_sharp,
-                                    color: Colors.white,
-                                    size: 55.0,
-                                  ),
-                                  Text(
-                                    'Add To Favorite',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                                    GestureDetector(
+                                      onTap: () =>
+                                          print('Add To Favorite pressed'),
+                                      //todo: as user taps this add movie to favorite list
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.add_circle_outline_sharp,
+                                            color: Colors.white,
+                                            size: 55.0,
+                                          ),
+                                          Text(
+                                            'Add To Favorite',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => print('Download pressed'),
-                              //todo: as user taps this download movie
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_down_sharp,
-                                    color: Colors.white,
-                                    size: 55.0,
-                                  ),
-                                  Text(
-                                    'Download',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                                    GestureDetector(
+                                      onTap: () => print('Download pressed'),
+                                      //todo: as user taps this download movie
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.arrow_circle_down_sharp,
+                                            color: Colors.white,
+                                            size: 55.0,
+                                          ),
+                                          Text(
+                                            'Download',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                setState(() {
-                                  showLoader = !showLoader;
-                                });
-                                String url = 'https://google.com/';
-                                if (await canLaunch(url)) {
-                                  await launch(
-                                    url,
-                                    forceSafariVC: true,
-                                    forceWebView: true,
-                                    enableJavaScript: true,
-                                  );
-                                  setState(() {
-                                    showLoader = !showLoader;
-                                  });
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                                // showModalBottomSheet(
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.vertical(
-                                //             top: Radius.circular(30.0))),
-                                //     backgroundColor: Colors.white,
-                                //     context: context,
-                                //     isScrollControlled: true,
-                                //     isDismissible: false,
-                                //     builder: (context) {
-                                //       return Padding(
-                                //         padding: const EdgeInsets.symmetric(
-                                //             horizontal: 20, vertical: 8.0),
-                                //         child: SingleChildScrollView(
-                                //           child: Column(
-                                //             crossAxisAlignment:
-                                //                 CrossAxisAlignment.start,
-                                //             mainAxisSize: MainAxisSize.min,
-                                //             children: <Widget>[
-                                //               Align(
-                                //                 alignment: Alignment.topRight,
-                                //                 child: IconButton(
-                                //                     icon: Icon(Ionicons
-                                //                         .close_circle_outline),
-                                //                     //padding: EdgeInsets.only(right: 30.0, top: 10.0),
-                                //                     splashRadius: 20.0,
-                                //                     iconSize: 30.0,
-                                //                     onPressed: () {
-                                //                       Navigator.pop(context);
-                                //                     }),
-                                //               ),
-                                //               Text(
-                                //                 'Set up your payment',
-                                //                 style: TextStyle(
-                                //                     fontSize: 28.0,
-                                //                     fontWeight: FontWeight.w500),
-                                //               ),
-                                //               Form(
-                                //                 key: _formKey,
-                                //                 child: Column(
-                                //                   children: [
-                                //                     TextFormField(
-                                //                       decoration: InputDecoration(
-                                //                         labelText: 'Name',
-                                //                       ),
-                                //                       onChanged: (String nom) {
-                                //                         name = nom;
-                                //                       },
-                                //                       validator: (nom) {
-                                //                         if (nom.isEmpty) {
-                                //                           return 'enter name';
-                                //                         }
-                                //                         return null;
-                                //                       },
-                                //                     ),
-                                //                     TextFormField(
-                                //                       decoration: InputDecoration(
-                                //                           labelText:
-                                //                               'Card Number'),
-                                //                       onChanged:
-                                //                           (String cardNum) {
-                                //                         cardNumber = cardNum;
-                                //                       },
-                                //                       validator: (cardNum) {
-                                //                         if (cardNum.isEmpty) {
-                                //                           return 'enter card number';
-                                //                         }
-                                //                         return null;
-                                //                       },
-                                //                     ),
-                                //                     TextFormField(
-                                //                       decoration: InputDecoration(
-                                //                           labelText:
-                                //                               'expiry date (mm/yyyy)'),
-                                //                       onChanged:
-                                //                           (String expiryDate) {
-                                //                         cardExpiryDate =
-                                //                             expiryDate;
-                                //                       },
-                                //                       validator: (expiryDate) {
-                                //                         if (expiryDate.isEmpty) {
-                                //                           return 'enter expiry date';
-                                //                         }
-                                //                         return null;
-                                //                       },
-                                //                     ),
-                                //                     TextFormField(
-                                //                       decoration: InputDecoration(
-                                //                           labelText:
-                                //                               'Security Code (CVV)'),
-                                //                       onChanged: (String cvv) {
-                                //                         cardCVV = cvv;
-                                //                       },
-                                //                       validator: (cvv) {
-                                //                         if (cvv.isEmpty) {
-                                //                           return 'enter security code';
-                                //                         }
-                                //                         return null;
-                                //                       },
-                                //                     ),
-                                //                     SizedBox(height: 30.0),
-                                //                     RoundedRaisedButton(
-                                //                         buttonText: 'Complete',
-                                //                         onPressed: () {
-                                //                           if (_formKey
-                                //                               .currentState
-                                //                               .validate()) {
-                                //                             print(name);
-                                //                             print(cardNumber);
-                                //                             print(cardExpiryDate);
-                                //                             print(cardCVV);
-                                //                           }
-                                //                         }),
-                                //                   ],
-                                //                 ),
-                                //               ),
-                                //               SizedBox(height: 10),
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       );
-                                //     });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.yellow[600],
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 60.0, vertical: 20.0),
-                              ),
-                              child: Text(
-                                'Subscribe',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
+                                  ],
                                 ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => print('Add To Favorite pressed'),
-                              //todo: as user taps this add movie to favorite list
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.add_circle_outline_sharp,
-                                    color: Colors.white,
-                                    size: 30.0,
-                                  ),
-                                  Text(
-                                    'Add To Favorite',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.yellow[600],
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 60.0, vertical: 20.0),
+                                      ),
+                                      child: Text(
+                                        'Subscribe',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20.0,
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        setState(() {
+                                          showLoader = true;
+                                        });
+                                        await PaymentMethods.initializePayment(
+                                            email);
+                                        String url =
+                                            PaymentMethods.authorizationURL;
+                                        if (await canLaunch(url)) {
+                                          await launch(
+                                            url,
+                                            forceSafariVC: true,
+                                            forceWebView: true,
+                                            enableJavaScript: true,
+                                          );
+                                          await PaymentMethods.verifyPayment(
+                                              PaymentMethods.referenceCode);
+                                          PaymentMethods.paymentVerification ==
+                                                  true
+                                              ? subscribed = true
+                                              : subscribed = false;
+                                          setState(() {
+                                            showLoader = false;
+                                          });
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                                    GestureDetector(
+                                      onTap: () =>
+                                          print('Add To Favorite pressed'),
+                                      //todo: as user taps this add movie to favorite list
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.add_circle_outline_sharp,
+                                            color: Colors.white,
+                                            size: 30.0,
+                                          ),
+                                          Text(
+                                            'Add To Favorite',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }),
                 movieOverview(context),
                 movieCast(context, widget.id),
                 SizedBox(
@@ -681,3 +588,125 @@ Widget movieRecommendations(BuildContext context, String id) => Container(
         ],
       ),
     );
+
+// showModalBottomSheet(
+//     shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.vertical(
+//             top: Radius.circular(30.0))),
+//     backgroundColor: Colors.white,
+//     context: context,
+//     isScrollControlled: true,
+//     isDismissible: false,
+//     builder: (context) {
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(
+//             horizontal: 20, vertical: 8.0),
+//         child: SingleChildScrollView(
+//           child: Column(
+//             crossAxisAlignment:
+//                 CrossAxisAlignment.start,
+//             mainAxisSize: MainAxisSize.min,
+//             children: <Widget>[
+//               Align(
+//                 alignment: Alignment.topRight,
+//                 child: IconButton(
+//                     icon: Icon(Ionicons
+//                         .close_circle_outline),
+//                     //padding: EdgeInsets.only(right: 30.0, top: 10.0),
+//                     splashRadius: 20.0,
+//                     iconSize: 30.0,
+//                     onPressed: () {
+//                       Navigator.pop(context);
+//                     }),
+//               ),
+//               Text(
+//                 'Set up your payment',
+//                 style: TextStyle(
+//                     fontSize: 28.0,
+//                     fontWeight: FontWeight.w500),
+//               ),
+//               Form(
+//                 key: _formKey,
+//                 child: Column(
+//                   children: [
+//                     TextFormField(
+//                       decoration: InputDecoration(
+//                         labelText: 'Name',
+//                       ),
+//                       onChanged: (String nom) {
+//                         name = nom;
+//                       },
+//                       validator: (nom) {
+//                         if (nom.isEmpty) {
+//                           return 'enter name';
+//                         }
+//                         return null;
+//                       },
+//                     ),
+//                     TextFormField(
+//                       decoration: InputDecoration(
+//                           labelText:
+//                               'Card Number'),
+//                       onChanged:
+//                           (String cardNum) {
+//                         cardNumber = cardNum;
+//                       },
+//                       validator: (cardNum) {
+//                         if (cardNum.isEmpty) {
+//                           return 'enter card number';
+//                         }
+//                         return null;
+//                       },
+//                     ),
+//                     TextFormField(
+//                       decoration: InputDecoration(
+//                           labelText:
+//                               'expiry date (mm/yyyy)'),
+//                       onChanged:
+//                           (String expiryDate) {
+//                         cardExpiryDate =
+//                             expiryDate;
+//                       },
+//                       validator: (expiryDate) {
+//                         if (expiryDate.isEmpty) {
+//                           return 'enter expiry date';
+//                         }
+//                         return null;
+//                       },
+//                     ),
+//                     TextFormField(
+//                       decoration: InputDecoration(
+//                           labelText:
+//                               'Security Code (CVV)'),
+//                       onChanged: (String cvv) {
+//                         cardCVV = cvv;
+//                       },
+//                       validator: (cvv) {
+//                         if (cvv.isEmpty) {
+//                           return 'enter security code';
+//                         }
+//                         return null;
+//                       },
+//                     ),
+//                     SizedBox(height: 30.0),
+//                     RoundedRaisedButton(
+//                         buttonText: 'Complete',
+//                         onPressed: () {
+//                           if (_formKey
+//                               .currentState
+//                               .validate()) {
+//                             print(name);
+//                             print(cardNumber);
+//                             print(cardExpiryDate);
+//                             print(cardCVV);
+//                           }
+//                         }),
+//                   ],
+//                 ),
+//               ),
+//               SizedBox(height: 10),
+//             ],
+//           ),
+//         ),
+//       );
+//     });

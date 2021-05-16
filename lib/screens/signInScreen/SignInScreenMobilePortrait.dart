@@ -187,7 +187,7 @@ class _SignInScreenMobilePortraitState
                                   height: 30.0,
                                 ),
                                 Consumer<UserModel>(
-                                  builder: (context, userInfo, _) {
+                                  builder: (context, user, _) {
                                     return RoundedRaisedButton(
                                       buttonText: "done",
                                       onPressed: () async {
@@ -199,9 +199,9 @@ class _SignInScreenMobilePortraitState
                                           setState(() {
                                             _showLoader = true;
                                           });
-                                          // Provider.of<UserModel>(context,
-                                          //         listen: false)
-                                          //     .updateEmail(_email);
+                                          Provider.of<UserModel>(context,
+                                                  listen: false)
+                                              .updateEmail(_email);
                                           // Provider.of<UserModel>(context,
                                           //         listen: false)
                                           //     .updatePassword(_password);

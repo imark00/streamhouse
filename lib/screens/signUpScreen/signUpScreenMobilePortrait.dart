@@ -265,9 +265,9 @@ class _SignUpScreenMobilePortraitState
                                           // Provider.of<UserModel>(context,
                                           //         listen: false)
                                           //     .updateName(_name);
-                                          // Provider.of<UserModel>(context,
-                                          //         listen: false)
-                                          //     .updateEmail(_email);
+                                          Provider.of<UserModel>(context,
+                                                  listen: false)
+                                              .updateEmail(_email);
                                           // Provider.of<UserModel>(context,
                                           //         listen: false)
                                           //     .updatePassword(_password);

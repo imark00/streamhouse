@@ -38,8 +38,6 @@ class StartApp extends StatelessWidget {
           GetStartedScreen.id: (context) => GetStartedScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
           SignInScreen.id: (context) => SignInScreen(),
-          SubscriptionPlanScreen.id: (context) => SubscriptionPlanScreen(),
-          PaymentScreen.id: (context) => PaymentScreen(),
           MainScreen.id: (context) => MainScreen(),
           DetailsScreen.id: (context) => DetailsScreen()
         },

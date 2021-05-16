@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/getStartedScreen/getStartedScreen.dart';
 import 'package:stream_house/widgets/roundedRaisedButton.dart';
 import 'package:stream_house/widgets/tile.dart';
@@ -11,27 +13,9 @@ class AccountScreenOption extends StatefulWidget {
 }
 
 class _AccountScreenOptionState extends State<AccountScreenOption> {
-  User loggedInUser;
-
-  @override
-  void initState() {
-    super.initState();
-    getUser();
-  }
-
-  getUser() {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-      }
-    } catch (error) {
-      print(error);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    String email = Provider.of<UserModel>(context).email;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +44,7 @@ class _AccountScreenOptionState extends State<AccountScreenOption> {
                   ),
                 ),
                 Text(
-                  loggedInUser.email,
+                  email,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500,
