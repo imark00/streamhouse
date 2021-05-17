@@ -463,7 +463,7 @@ String imagePath(String path) {
 }
 
 class PaymentMethods {
-  static bool subscribed;
+  static bool subscribed = false;
   static Future checkIfUserIsSubscribed(String email) async {
     List subscriptionList;
     try {
@@ -475,11 +475,9 @@ class PaymentMethods {
         Map mapResponse = jsonDecode(response.body);
         subscriptionList = mapResponse['data'];
 
-        for (int i = 0; i < subscriptionList.length; i++) {
+        for (var i = 0; i < subscriptionList.length; i++) {
           if (subscriptionList[i]['customer']['email'] == email) {
             return subscribed = true;
-          } else {
-            return subscribed = false;
           }
         }
       } else {
@@ -541,3 +539,11 @@ class PaymentMethods {
     }
   }
 }
+
+// for (var i = 0; i < subscriptionList.length; i++) {
+// if (subscriptionList[i]['customer']['email'] == email) {
+// return subscribed = true;
+// } else {
+// return subscribed = false;
+// }
+// }
