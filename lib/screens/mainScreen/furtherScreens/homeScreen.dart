@@ -6,7 +6,6 @@ import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();

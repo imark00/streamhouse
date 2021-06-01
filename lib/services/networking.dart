@@ -70,7 +70,7 @@ class Movies {
   static Future<List> getTopRatedMovies() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/movie/top_rated?api_key=$kMovieApiKey&language=en-US&page=1'));
+          'https://$kURL/movie/popular?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode((response.body));
@@ -164,7 +164,7 @@ class TVShows {
   static Future<List> getTopRatedTVShows() async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/top_rated?api_key=$kMovieApiKey&language=en-US&page=1'));
+          'https://$kURL/tv/popular?api_key=$kMovieApiKey&language=en-US&page=1'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
@@ -373,23 +373,23 @@ class Movie {
   }
 }
 
-class TVShow {
-  static Map tvShowDetails;
-  static Future getTVShowDetails(String tvShowId) async {
-    try {
-      http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId?api_key=$kMovieApiKey&language=en-US'));
-
-      if (response.statusCode == 200) {
-        return tvShowDetails = jsonDecode(response.body);
-      } else {
-        print(response.statusCode);
-        throw ('Failed');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+class OldTVShow {
+  // static Map tvShowDetails;
+  // static Future getTVShowDetails(String tvShowId) async {
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(
+  //         'https://$kURL/tv/$tvShowId?api_key=$kMovieApiKey&language=en-US'));
+  //
+  //     if (response.statusCode == 200) {
+  //       return tvShowDetails = jsonDecode(response.body);
+  //     } else {
+  //       print(response.statusCode);
+  //       throw ('Failed');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   static List tvShowEpisodes;
   static Future getTVShowEpisodes(int tvShowId, int seasonNumber) async {
@@ -409,15 +409,66 @@ class TVShow {
     }
   }
 
-  static List tvShowsCast;
-  static Future getTVShowCast(int tvShowId) async {
+  // static List tvShowsCast;
+  // static Future getTVShowCast(int tvShowId) async {
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(
+  //         'https://$kURL/tv/$tvShowId/credits?api_key=$kMovieApiKey&language=en-US'));
+  //
+  //     if (response.statusCode == 200) {
+  //       Map mapResponse = jsonDecode(response.body);
+  //       return tvShowsCast = mapResponse['cast'];
+  //     } else {
+  //       print(response.statusCode);
+  //       throw ('Failed');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // static List similarTVShows;
+  // static Future getSimilarTVShows(int tvShowId) async {
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(
+  //         'https://$kURL/tv/$tvShowId/similar?api_key=$kMovieApiKey&language=en-US&page=1'));
+  //
+  //     if (response.statusCode == 200) {
+  //       Map mapResponse = jsonDecode(response.body);
+  //       return similarTVShows = mapResponse['results'];
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // static List tvShowVideo;
+  // static Future getTVShowVideo(int tvShowId) async {
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(
+  //         'https://$kURL/tv/$tvShowId/videos?api_key=$kMovieApiKey&language=en-US'));
+  //
+  //     if (response.statusCode == 200) {
+  //       Map mapResponse = jsonDecode(response.body);
+  //       return tvShowVideo = mapResponse['results'];
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+}
+
+class TVShow {
+  static Map tvShowDetails;
+
+  static Future getTVShowDetails(String tvShowID) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/credits?api_key=$kMovieApiKey&language=en-US'));
+          'https://$kURL/tv/$tvShowID?api_key=$kMovieApiKey&language=en-US&append_to_response=credits,videos,recommendations'));
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
-        return tvShowsCast = mapResponse['cast'];
+        return tvShowDetails = mapResponse;
       } else {
         print(response.statusCode);
         throw ('Failed');
@@ -427,35 +478,25 @@ class TVShow {
     }
   }
 
-  static List similarTVShows;
-  static Future getSimilarTVShows(int tvShowId) async {
-    try {
-      http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/similar?api_key=$kMovieApiKey&language=en-US&page=1'));
+  // static Future getSeasonEpisodes(String tvShowID, String seasonNumber) {}
 
-      if (response.statusCode == 200) {
-        Map mapResponse = jsonDecode(response.body);
-        return similarTVShows = mapResponse['results'];
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  static List tvShowVideo;
-  static Future getTVShowVideo(int tvShowId) async {
-    try {
-      http.Response response = await http.get(Uri.parse(
-          'https://$kURL/tv/$tvShowId/videos?api_key=$kMovieApiKey&language=en-US'));
-
-      if (response.statusCode == 200) {
-        Map mapResponse = jsonDecode(response.body);
-        return tvShowVideo = mapResponse['results'];
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // static List tvShowEpisodes;
+  // static Future getTVShowEpisodes(int tvShowId, int seasonNumber) async {
+  //   try {
+  //     http.Response response = await http.get(Uri.parse(
+  //         'https://$kURL/tv/$tvShowId/season/$seasonNumber?api_key=$kMovieApiKey&language=en-US'));
+  //
+  //     if (response.statusCode == 200) {
+  //       Map mapResponse = jsonDecode(response.body);
+  //       return tvShowEpisodes = mapResponse['episodes'];
+  //     } else {
+  //       print(response.statusCode);
+  //       throw ('Failed');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }
 
 String imagePath(String path) {
@@ -539,11 +580,3 @@ class PaymentMethods {
     }
   }
 }
-
-// for (var i = 0; i < subscriptionList.length; i++) {
-// if (subscriptionList[i]['customer']['email'] == email) {
-// return subscribed = true;
-// } else {
-// return subscribed = false;
-// }
-// }

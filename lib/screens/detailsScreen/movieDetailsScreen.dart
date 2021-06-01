@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -9,8 +10,6 @@ import 'package:stream_house/screens/videoPlayerScreen/videoPlayerScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:stream_house/widgets/roundedRaisedButton.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String id;
@@ -21,9 +20,6 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  // bool subscribed = false;
-  //final _formKey = GlobalKey<FormState>();
-  //String name, cardNumber, cardExpiryDate, cardCVV;
   bool showLoader = false;
   bool subscribed;
 
@@ -79,7 +75,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        // Movie.movieVideoURL();
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -89,13 +84,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                           .movieVideoURL())),
                                         );
                                       },
-                                      //todo: as user taps this play movie
                                       child: Column(
                                         children: [
                                           Icon(
-                                            Icons.play_circle_outline,
+                                            Ionicons.play_circle,
                                             color: Colors.white,
-                                            size: 55.0,
+                                            size: 40.0,
                                           ),
                                           Text(
                                             'Play',
@@ -114,9 +108,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       child: Column(
                                         children: [
                                           Icon(
-                                            Icons.add_circle_outline_sharp,
+                                            Ionicons.add_circle_outline,
                                             color: Colors.white,
-                                            size: 55.0,
+                                            size: 40.0,
                                           ),
                                           Text(
                                             'Add To Favorite',
@@ -134,9 +128,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       child: Column(
                                         children: [
                                           Icon(
-                                            Icons.arrow_circle_down_sharp,
+                                            Ionicons.download_outline,
                                             color: Colors.white,
-                                            size: 55.0,
+                                            size: 40.0,
                                           ),
                                           Text(
                                             'Download',

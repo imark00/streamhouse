@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:stream_house/screens/detailsScreen/tvShowDetailsScreen.dart';
 import 'package:stream_house/services/networking.dart';
 
 class DetailsScreenMobilePortrait extends StatefulWidget {
@@ -34,9 +35,8 @@ class _DetailsScreenMobilePortraitState
                 id: id,
               );
             } else {
-              return Text(
-                'still under development',
-                style: TextStyle(fontSize: 36.0, color: Colors.pink),
+              return TVShowDetailsScreen(
+                id: id,
               );
             }
           }

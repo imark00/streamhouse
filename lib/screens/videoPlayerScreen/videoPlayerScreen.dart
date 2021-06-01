@@ -33,16 +33,73 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink,
-      body: Center(
-        child: YoutubePlayer(
-          controller: _youtubePlayerController,
-          showVideoProgressIndicator: true,
-          onReady: () {
-            print('Ready');
-          },
-        ),
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(true);
+      },
+      child: OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.landscape) {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              body: Center(
+                child: YoutubePlayer(
+                  controller: _youtubePlayerController,
+                  showVideoProgressIndicator: true,
+                  onReady: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Ready',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+              ),
+              body: Center(
+                child: YoutubePlayer(
+                  controller: _youtubePlayerController,
+                  showVideoProgressIndicator: true,
+                  onReady: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Ready',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
+          }
+        },
+        // child: Scaffold(
+        //   backgroundColor: Colors.black,
+        //   body: Center(
+        //     child: YoutubePlayer(
+        //       controller: _youtubePlayerController,
+        //       showVideoProgressIndicator: true,
+        //       onReady: () {
+        //         ScaffoldMessenger.of(context).showSnackBar(
+        //           SnackBar(
+        //             content: Text(
+        //               'Ready',
+        //             ),
+        //           ),
+        //         );
+        //       },
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
