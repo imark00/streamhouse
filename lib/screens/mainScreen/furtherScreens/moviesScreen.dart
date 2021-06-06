@@ -14,16 +14,6 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
   @override
-  // void initState() {
-  //   Movies.getUpcomingMovies();
-  //   Movies.getActionMovies();
-  //   Movies.getScienceFictionMovies();
-  //   Movies.getHorrorMovies();
-  //   Movies.getComedyMovies();
-  //   super.initState();
-  // }
-
-  @override
   Widget build(BuildContext context) {
     String id = '';
     String type = 'movie';
@@ -58,8 +48,8 @@ class _MoviesScreenState extends State<MoviesScreen> {
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(Movies
-                                    .upcomingMovies[index]['poster_path']),
+                                imageUrl: imagePath(Movies.upcomingMovies[index]
+                                    ['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
                                     Shimmer.fromColors(
@@ -127,7 +117,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(
+                                imageUrl: imagePath(
                                     Movies.horrorMovies[index]['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
@@ -196,7 +186,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(
+                                imageUrl: imagePath(
                                     Movies.actionMovies[index]['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
@@ -265,7 +255,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(
+                                imageUrl: imagePath(
                                     Movies.comedyMovies[index]['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
@@ -334,8 +324,8 @@ class _MoviesScreenState extends State<MoviesScreen> {
                             },
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: portraitImagePath(Movies
-                                    .scienceFiction[index]['poster_path']),
+                                imageUrl: imagePath(Movies.scienceFiction[index]
+                                    ['poster_path']),
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) =>
                                     Shimmer.fromColors(
@@ -379,8 +369,4 @@ class _MoviesScreenState extends State<MoviesScreen> {
       ),
     );
   }
-}
-
-String portraitImagePath(String path) {
-  return "https://image.tmdb.org/t/p/original/$path";
 }

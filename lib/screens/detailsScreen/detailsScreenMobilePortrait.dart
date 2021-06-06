@@ -24,6 +24,11 @@ class _DetailsScreenMobilePortraitState
 
     return Scaffold(
       backgroundColor: Color(0xff063048),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: FutureBuilder(
         future: type == 'movie'
             ? Movie.getMovieDetails(id)
@@ -31,189 +36,14 @@ class _DetailsScreenMobilePortraitState
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (type == 'movie') {
-              return MovieDetailsScreen(
-                id: id,
-              );
+              return MovieDetailsScreen();
             } else {
-              return TVShowDetailsScreen(
-                id: id,
-              );
+              return TVShowDetailsScreen();
             }
           }
-          return detailsScreenShimmerEffect(context);
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
   }
 }
-
-Widget detailsScreenShimmerEffect(BuildContext context) => Column(
-      children: [
-        Shimmer.fromColors(
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(90.0),
-              bottomRight: Radius.circular(90.0),
-            ),
-            child: Container(
-              color: Colors.white,
-              height: 280,
-              width: double.infinity,
-            ),
-          ),
-          baseColor: Color(0xff063048),
-          highlightColor: Colors.grey.withOpacity(0.0),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              Container(
-                height: 180.0,
-                child: Row(
-                  children: [
-                    Shimmer.fromColors(
-                      child: Container(
-                        color: Colors.white,
-                        height: 180,
-                        width: 120,
-                      ),
-                      baseColor: Color(0xff063048),
-                      highlightColor: Colors.grey.withOpacity(0.0),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Shimmer.fromColors(
-                          child: Container(
-                            color: Colors.white,
-                            height: 20,
-                            width: 150.0,
-                          ),
-                          baseColor: Color(0xff063048),
-                          highlightColor: Colors.grey.withOpacity(0.0),
-                        ),
-                        Shimmer.fromColors(
-                          child: Container(
-                            color: Colors.white,
-                            height: 20,
-                            width: 150.0,
-                          ),
-                          baseColor: Color(0xff063048),
-                          highlightColor: Colors.grey.withOpacity(0.0),
-                        ),
-                        Shimmer.fromColors(
-                          child: Container(
-                            color: Colors.white,
-                            height: 20,
-                            width: 150.0,
-                          ),
-                          baseColor: Color(0xff063048),
-                          highlightColor: Colors.grey.withOpacity(0.0),
-                        ),
-                        Shimmer.fromColors(
-                          child: Container(
-                            color: Colors.white,
-                            height: 20,
-                            width: 150.0,
-                          ),
-                          baseColor: Color(0xff063048),
-                          highlightColor: Colors.grey.withOpacity(0.0),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Shimmer.fromColors(
-                  child: Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: double.infinity,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );

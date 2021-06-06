@@ -13,19 +13,9 @@ class TvShowsScreen extends StatefulWidget {
 
 class _TvShowsScreenState extends State<TvShowsScreen> {
   @override
-  // void initState() {
-  //   TVShows.getAiringTodayTVShows();
-  //   TVShows.getOnTheAirTVShows();
-  //   TVShows.getDramaTVShows();
-  //   TVShows.getMysteryTVShows();
-  //   TVShows.getScienceFictionTVShows();
-  //   TVShows.getComedyTVShows();
-  //   TVShows.getAnimationTVShows();
-  //   super.initState();
-  // }
-
-  @override
   Widget build(BuildContext context) {
+    String id = '';
+    String type = 'tvShow';
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -43,8 +33,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.airingTodayTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.airingTodayTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -103,8 +99,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.onTheAirTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.onTheAirTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -163,8 +165,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.dramaTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.dramaTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -223,8 +231,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.mysteryTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.mysteryTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -283,8 +297,15 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.scienceFictionTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.scienceFictionTVShows[index]
+                                            ['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -344,8 +365,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.comedyTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.comedyTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -402,8 +429,14 @@ class _TvShowsScreenState extends State<TvShowsScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.animationTVShows[index]['id']);
-                              Navigator.pushNamed(context, DetailsScreen.id);
+                              Navigator.pushNamed(context, DetailsScreen.id,
+                                  arguments: [
+                                    id = TVShows.animationTVShows[index]['id']
+                                        .toString(),
+                                    type,
+                                  ]);
+                              print(id);
+                              print(type);
                             },
                             child: Container(
                               child: CachedNetworkImage(

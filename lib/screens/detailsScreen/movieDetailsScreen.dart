@@ -10,11 +10,9 @@ import 'package:stream_house/screens/videoPlayerScreen/videoPlayerScreen.dart';
 import 'package:stream_house/services/networking.dart';
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  final String id;
-
-  const MovieDetailsScreen({Key key, @required this.id}) : super(key: key);
   @override
   _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
 }
@@ -22,10 +20,13 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   bool showLoader = false;
   bool subscribed;
+  PaymentMethods obj = PaymentMethods();
 
   @override
   Widget build(BuildContext context) {
     String email = Provider.of<UserModel>(context).email;
+    String id = '';
+    String type = 'movie';
     return ModalProgressHUD(
       inAsyncCall: showLoader,
       progressIndicator: CircularProgressIndicator(
@@ -54,17 +55,199 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      movieBannerDisplay(context),
-                      moviePosterDisplay(context),
-                      movieHeaderDisplay(context),
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(90.0),
+                          bottomRight: Radius.circular(90.0),
+                        ),
+                        child: Container(
+                          height: 280.0,
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(90.0),
+                              bottomRight: Radius.circular(90.0),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: imagePath(
+                                Movie.movieDetails['backdrop_path'],
+                              ),
+                              fit: BoxFit.fill,
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(90.0),
+                                    bottomRight: Radius.circular(90.0),
+                                  ),
+                                  child: Container(
+                                    color: Colors.white,
+                                    height: 280,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                                baseColor: Color(0xff063048),
+                                highlightColor: Colors.grey.withOpacity(0.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 230,
+                        left: 20.0,
+                        child: Container(
+                          height: 200,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                          ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                            child: CachedNetworkImage(
+                              imageUrl: imagePath(
+                                Movie.movieDetails['poster_path'],
+                              ),
+                              fit: BoxFit.fill,
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                child: Container(
+                                  height: 200,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15.0)),
+                                  ),
+                                ),
+                                baseColor: Color(0xff063048),
+                                highlightColor: Colors.grey.withOpacity(0.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        top: 290,
+                        left: 150.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              Movie.movieDetails['title'] != null
+                                  ? Movie.movieDetails['title']
+                                  : 'N/A',
+                              style: TextStyle(
+                                fontSize:
+                                    Movie.movieDetails['title'].length < 35
+                                        ? 30.0
+                                        : 19.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Status: ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                Text(
+                                  Movie.movieDetails['status'] != null
+                                      ? Movie.movieDetails['status']
+                                      : 'N/A',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Release Date: ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                Text(
+                                  Movie.movieDetails['release_date'] != null
+                                      ? Movie.movieDetails['release_date']
+                                      : 'N/A',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Runtime: ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                Text(
+                                  Movie.movieDetails['runtime'] != null
+                                      ? '${Movie.movieDetails['runtime']} mins'
+                                      : 'N/A',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Genres: ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                Text(
+                                  '${Movie.movieDetails['genres'][0]['name']}  ',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                                Text(
+                                  Movie.movieDetails['genres']
+                                              .asMap()
+                                              .containsKey(1) &&
+                                          Movie
+                                                  .movieDetails['genres'][0]
+                                                      ['name']
+                                                  .length <
+                                              18
+                                      ? '${Movie.movieDetails['genres'][1]['name']}'
+                                      : '',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 FutureBuilder(
-                    future: PaymentMethods.checkIfUserIsSubscribed(email),
+                    future: obj.checkIfUserIsSubscribed(email),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        subscribed = PaymentMethods.subscribed;
+                        subscribed = obj.subscribed;
                         return subscribed
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -78,10 +261,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  VideoPlayerScreen(
-                                                      movieID: Movie
-                                                          .movieVideoURL())),
+                                            builder: (context) =>
+                                                VideoPlayerScreen(
+                                              videoID: Movie.movieVideoURL(),
+                                            ),
+                                          ),
                                         );
                                       },
                                       child: Column(
@@ -223,12 +407,253 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         child: Center(child: CircularProgressIndicator()),
                       );
                     }),
-                movieOverview(context),
-                movieCast(context, widget.id),
+                Container(
+                  margin: EdgeInsets.only(left: 20.0, top: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Overview',
+                        style: TextStyle(
+                            fontSize: 23.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Movie.movieDetails['overview'] == ''
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'N/A',
+                                style: TextStyle(
+                                  fontSize: 23.0,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            )
+                          : Text(
+                              Movie.movieDetails['overview'],
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                                fontSize: 18.0,
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0, top: 13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Cast',
+                        style: TextStyle(
+                            fontSize: 23.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Movie.movieDetails['credits']['cast'].length == 0
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'N/A',
+                                style: TextStyle(
+                                  fontSize: 23.0,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 130,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: Movie
+                                              .movieDetails['credits']['cast']
+                                              .length >=
+                                          5
+                                      ? 5
+                                      : Movie.movieDetails['credits']['cast']
+                                          .length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        CachedNetworkImage(
+                                          imageUrl: imagePath(Movie
+                                                  .movieDetails['credits']
+                                              ['cast'][index]['profile_path']),
+                                          imageBuilder:
+                                              (context, imageBuilder) {
+                                            return Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 10.0),
+                                              child: CircleAvatar(
+                                                radius: 55.0,
+                                                backgroundImage: imageBuilder,
+                                              ),
+                                            );
+                                          },
+                                          placeholder: (context, url) =>
+                                              Shimmer.fromColors(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              child: Container(
+                                                width: 110.0,
+                                                height: 110.0,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            baseColor: Color(0xff063048),
+                                            highlightColor:
+                                                Colors.grey.withOpacity(0.0),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Center(
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'N/A',
+                                                style: TextStyle(
+                                                  fontSize: 23.0,
+                                                  color: Colors.grey[400],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          Movie.movieDetails['credits']['cast']
+                                              [index]['original_name'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
-                movieRecommendations(context, widget.id),
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0, top: 13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Recommendations',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Movie.movieDetails['recommendations']['results'].length ==
+                              0
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'N/A',
+                                style: TextStyle(
+                                  fontSize: 23.0,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 200,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: Movie
+                                              .movieDetails['recommendations']
+                                                  ['results']
+                                              .length >=
+                                          5
+                                      ? 5
+                                      : Movie
+                                          .movieDetails['recommendations']
+                                              ['results']
+                                          .length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      child: Container(
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border:
+                                              Border.all(color: Colors.white38),
+                                        ),
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl: imagePath(
+                                                Movie.movieDetails[
+                                                            'recommendations']
+                                                        ['results'][index]
+                                                    ['poster_path']),
+                                            fit: BoxFit.fill,
+                                            placeholder: (context, url) =>
+                                                Shimmer.fromColors(
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  child: Container(
+                                                    height: 200,
+                                                    width: 120,
+                                                    color: Colors.white,
+                                                  )),
+                                              baseColor: Color(0xff063048),
+                                              highlightColor:
+                                                  Colors.grey.withOpacity(0.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, DetailsScreen.id,
+                                            arguments: [
+                                              id = Movie.movieDetails[
+                                                      'recommendations']
+                                                      ['results'][index]['id']
+                                                  .toString(),
+                                              type,
+                                            ]);
+                                        print(id);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                ),
                 SizedBox(height: 20.0),
               ],
             ),
@@ -238,469 +663,3 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 }
-
-Widget movieBannerDisplay(BuildContext context) => ClipRRect(
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(90.0),
-        bottomRight: Radius.circular(90.0),
-      ),
-      child: Container(
-        height: 280.0,
-        width: double.infinity,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(90.0),
-            bottomRight: Radius.circular(90.0),
-          ),
-          child: CachedNetworkImage(
-            imageUrl: imagePath(
-              Movie.movieDetails['backdrop_path'],
-            ),
-            fit: BoxFit.fill,
-            placeholder: (context, url) => Shimmer.fromColors(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(90.0),
-                  bottomRight: Radius.circular(90.0),
-                ),
-                child: Container(
-                  color: Colors.white,
-                  height: 280,
-                  width: double.infinity,
-                ),
-              ),
-              baseColor: Color(0xff063048),
-              highlightColor: Colors.grey.withOpacity(0.0),
-            ),
-          ),
-        ),
-      ),
-    );
-
-Widget moviePosterDisplay(BuildContext context) => Positioned(
-      top: 230,
-      left: 20.0,
-      child: Container(
-        height: 200,
-        width: 120,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          child: CachedNetworkImage(
-            imageUrl: imagePath(
-              Movie.movieDetails['poster_path'],
-            ),
-            fit: BoxFit.fill,
-            placeholder: (context, url) => Shimmer.fromColors(
-              child: Container(
-                height: 200,
-                width: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-              ),
-              baseColor: Color(0xff063048),
-              highlightColor: Colors.grey.withOpacity(0.0),
-            ),
-          ),
-        ),
-      ),
-    );
-
-Widget movieHeaderDisplay(BuildContext context) => Positioned.fill(
-      top: 290,
-      left: 150.0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            Movie.movieDetails['title'],
-            style: TextStyle(
-              fontSize: Movie.movieDetails['title'].length < 35 ? 30.0 : 19.0,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            children: [
-              Text(
-                'Status: ',
-                style: TextStyle(
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                Movie.movieDetails['status'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Release Date: ',
-                style: TextStyle(
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                Movie.movieDetails['release_date'],
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Runtime: ',
-                style: TextStyle(
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                '${Movie.movieDetails['runtime']} mins',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                'Genres: ',
-                style: TextStyle(
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                '${Movie.movieDetails['genres'][0]['name']}  ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-              Text(
-                Movie.movieDetails['genres'].asMap().containsKey(1)
-                    ? '${Movie.movieDetails['genres'][1]['name']}'
-                    : '',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-
-Widget movieOverview(BuildContext context) => Container(
-      margin: EdgeInsets.only(left: 20.0, top: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Overview',
-            style: TextStyle(
-                fontSize: 23.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Text(
-            Movie.movieDetails['overview'],
-            style: TextStyle(color: Colors.grey[400], fontSize: 18.0),
-          ),
-        ],
-      ),
-    );
-
-Widget movieCast(BuildContext context, String id) => Container(
-      margin: const EdgeInsets.only(left: 20.0, top: 13.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Cast',
-            style: TextStyle(
-                fontSize: 23.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          FutureBuilder(
-              future: Movie.getMovieCast(id),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    height: 130,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100.0),
-                              child: Container(
-                                margin: EdgeInsets.only(right: 10.0),
-                                width: 110.0,
-                                height: 110.0,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: imagePath(
-                                        Movie.movieCast[index]['profile_path']),
-                                    fit: BoxFit.fill,
-                                    placeholder: (context, url) =>
-                                        Shimmer.fromColors(
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100.0),
-                                        child: Container(
-                                          width: 110.0,
-                                          height: 110.0,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      baseColor: Color(0xff063048),
-                                      highlightColor:
-                                          Colors.grey.withOpacity(0.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              Movie.movieCast[index]['original_name'],
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  child: Container(
-                    width: double.infinity,
-                    height: 130,
-                    color: Colors.white,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                );
-              }),
-        ],
-      ),
-    );
-
-Widget movieRecommendations(BuildContext context, String id) => Container(
-      margin: const EdgeInsets.only(left: 20.0, top: 13.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Recommendations',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          FutureBuilder(
-              future: Movie.getRecommendedMovies(id),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    height: 200,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(color: Colors.white38),
-                          ),
-                          margin: EdgeInsets.only(right: 10.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl: imagePath(Movie.recommendedMovies[index]
-                                  ['poster_path']),
-                              fit: BoxFit.fill,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    child: Container(
-                                      height: 200,
-                                      width: 120,
-                                      color: Colors.white,
-                                    )),
-                                baseColor: Color(0xff063048),
-                                highlightColor: Colors.grey.withOpacity(0.0),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
-                return Shimmer.fromColors(
-                  child: Container(
-                    width: double.infinity,
-                    height: 200,
-                    color: Colors.white,
-                  ),
-                  baseColor: Color(0xff063048),
-                  highlightColor: Colors.grey.withOpacity(0.0),
-                );
-              }),
-        ],
-      ),
-    );
-
-// showModalBottomSheet(
-//     shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.vertical(
-//             top: Radius.circular(30.0))),
-//     backgroundColor: Colors.white,
-//     context: context,
-//     isScrollControlled: true,
-//     isDismissible: false,
-//     builder: (context) {
-//       return Padding(
-//         padding: const EdgeInsets.symmetric(
-//             horizontal: 20, vertical: 8.0),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment:
-//                 CrossAxisAlignment.start,
-//             mainAxisSize: MainAxisSize.min,
-//             children: <Widget>[
-//               Align(
-//                 alignment: Alignment.topRight,
-//                 child: IconButton(
-//                     icon: Icon(Ionicons
-//                         .close_circle_outline),
-//                     //padding: EdgeInsets.only(right: 30.0, top: 10.0),
-//                     splashRadius: 20.0,
-//                     iconSize: 30.0,
-//                     onPressed: () {
-//                       Navigator.pop(context);
-//                     }),
-//               ),
-//               Text(
-//                 'Set up your payment',
-//                 style: TextStyle(
-//                     fontSize: 28.0,
-//                     fontWeight: FontWeight.w500),
-//               ),
-//               Form(
-//                 key: _formKey,
-//                 child: Column(
-//                   children: [
-//                     TextFormField(
-//                       decoration: InputDecoration(
-//                         labelText: 'Name',
-//                       ),
-//                       onChanged: (String nom) {
-//                         name = nom;
-//                       },
-//                       validator: (nom) {
-//                         if (nom.isEmpty) {
-//                           return 'enter name';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                     TextFormField(
-//                       decoration: InputDecoration(
-//                           labelText:
-//                               'Card Number'),
-//                       onChanged:
-//                           (String cardNum) {
-//                         cardNumber = cardNum;
-//                       },
-//                       validator: (cardNum) {
-//                         if (cardNum.isEmpty) {
-//                           return 'enter card number';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                     TextFormField(
-//                       decoration: InputDecoration(
-//                           labelText:
-//                               'expiry date (mm/yyyy)'),
-//                       onChanged:
-//                           (String expiryDate) {
-//                         cardExpiryDate =
-//                             expiryDate;
-//                       },
-//                       validator: (expiryDate) {
-//                         if (expiryDate.isEmpty) {
-//                           return 'enter expiry date';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                     TextFormField(
-//                       decoration: InputDecoration(
-//                           labelText:
-//                               'Security Code (CVV)'),
-//                       onChanged: (String cvv) {
-//                         cardCVV = cvv;
-//                       },
-//                       validator: (cvv) {
-//                         if (cvv.isEmpty) {
-//                           return 'enter security code';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                     SizedBox(height: 30.0),
-//                     RoundedRaisedButton(
-//                         buttonText: 'Complete',
-//                         onPressed: () {
-//                           if (_formKey
-//                               .currentState
-//                               .validate()) {
-//                             print(name);
-//                             print(cardNumber);
-//                             print(cardExpiryDate);
-//                             print(cardCVV);
-//                           }
-//                         }),
-//                   ],
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//             ],
-//           ),
-//         ),
-//       );
-//     });

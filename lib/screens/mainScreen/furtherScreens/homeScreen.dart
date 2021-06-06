@@ -13,15 +13,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  // void initState() {
-  //   TrendingMovies.getTrendingMovies();
-  //   TrendingTVShows.getTrendingTVShows();
-  //   Movies.getTopRatedMovies();
-  //   TVShows.getTopRatedTVShows();
-  //   super.initState();
-  // }
-
-  @override
   Widget build(BuildContext context) {
     String id;
     String type = "";
@@ -248,7 +239,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
-                              print(TVShows.topRatedTVShows[index]['id']);
                               Navigator.pushNamed(
                                 context,
                                 DetailsScreen.id,
@@ -258,6 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type = 'tvShow',
                                 ],
                               );
+                              print(id);
                             },
                             child: Container(
                               child: CachedNetworkImage(
@@ -306,8 +297,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-String imagePath(String path) {
-  return "https://image.tmdb.org/t/p/original/$path";
 }
