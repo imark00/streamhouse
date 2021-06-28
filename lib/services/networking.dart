@@ -13,6 +13,7 @@ class TrendingMovies {
 
       if (response.statusCode == 200) {
         Map mapResponse = jsonDecode(response.body);
+        print(mapResponse);
         return trendingMovies = mapResponse['results'];
       } else {
         print(response.statusCode);

@@ -5,10 +5,8 @@ import 'package:stream_house/models/userModel.dart';
 import 'package:stream_house/screens/getStartedScreen/getStartedScreen.dart';
 import 'package:stream_house/screens/mainScreen/mainScreen.dart';
 import 'package:stream_house/screens/detailsScreen/detailsScreen.dart';
-import 'package:stream_house/screens/paymentScreen.dart';
 import 'package:stream_house/screens/signInScreen/signInScreen.dart';
 import 'package:stream_house/screens/signUpScreen/signUpScreen.dart';
-import 'package:stream_house/screens/subscriptionPlanScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

@@ -35,14 +35,14 @@ class _AccountScreenOptionState extends State<AccountScreenOption> {
                   ),
                   radius: 55.0,
                 ),
-                Text(
-                  'username',
-                  style: TextStyle(
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
+                // Text(
+                //   'username',
+                //   style: TextStyle(
+                //     fontSize: 23.0,
+                //     fontWeight: FontWeight.w700,
+                //     color: Colors.white,
+                //   ),
+                // ),
                 Text(
                   email,
                   style: TextStyle(
