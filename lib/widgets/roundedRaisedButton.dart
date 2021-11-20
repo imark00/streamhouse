@@ -11,6 +11,7 @@ class RoundedRaisedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _mediaQuery = MediaQuery.of(context).size;
     return RaisedButton(
       elevation: 0.0,
       color: Colors.transparent,
@@ -27,10 +28,13 @@ class RoundedRaisedButton extends StatelessWidget {
           //   ],
           // ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 70.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(
+            horizontal: _mediaQuery.width * 0.15,
+            vertical: _mediaQuery.height * 0.01),
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 30.0, color: Colors.white),
+          style: TextStyle(
+              fontSize: _mediaQuery.width * 0.08, color: Colors.white),
         ),
       ),
       onPressed: onPressed,
